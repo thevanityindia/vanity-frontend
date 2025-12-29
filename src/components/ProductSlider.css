@@ -1,0 +1,72 @@
+.product-slider-section {
+    padding: 40px 20px;
+    background-color: #fff;
+    overflow: hidden;
+    /* Hide overflow from the page */
+}
+
+.product-slider-section h2 {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 30px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.product-slider-container {
+    width: 100%;
+    overflow: hidden;
+    position: relative;
+}
+
+.product-slider-track {
+    display: flex;
+    gap: 20px;
+    width: max-content;
+    animation: scroll 30s linear infinite;
+    /* Adjust speed here */
+}
+
+.product-slider-container:hover .product-slider-track {
+    animation-play-state: paused;
+    /* Pause on hover for interaction */
+}
+
+.product-slider-item {
+    width: 280px;
+    /* Fixed width for consistency */
+    flex-shrink: 0;
+}
+
+/* Keyframes for infinite scroll */
+/* We move -50% because we duplicated the list once. 
+   So we show the first set, then scroll past it to the second set.
+   When we reach the start of the 2nd set (which looks identical to start of 1st),
+   we snap back to 0%. 
+   
+   Wait, if we have 2 sets: [A B C] [A B C]
+   Start: 0 (See A B C)
+   End: -50% (See A B C, the 2nd set)
+   Since the 2nd set at -50% is visually identical to the 1st set at 0%,
+   switching back to 0% is seamless.
+*/
+@keyframes scroll {
+    0% {
+        transform: translateX(0);
+    }
+
+    100% {
+        transform: translateX(-50%);
+    }
+}
+
+@media (max-width: 768px) {
+    .product-slider-item {
+        width: 220px;
+    }
+
+    .product-slider-section h2 {
+        font-size: 1.5rem;
+    }
+}
