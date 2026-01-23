@@ -1,21 +1,32 @@
 import React from 'react';
 import './CategoryPage.css';
-import { mockProducts } from '../data/mockProducts';
+
 import ProductCard from './ProductCard';
 
 const CategoryPage = ({ title }) => {
     const [selectedBrands, setSelectedBrands] = React.useState([]);
     const [selectedPriceRanges, setSelectedPriceRanges] = React.useState([]);
     const [sortBy, setSortBy] = React.useState('Bestsellers');
+    const [baseProducts, setBaseProducts] = React.useState([]);
+    const [loading, setLoading] = React.useState(true);
 
-    // 1. First, get products that match the page category
-    const baseProducts = React.useMemo(() => {
-        return mockProducts.filter(product => {
-            if (title === 'Artificial Jewellery') {
-                return product.category === 'Artificial Jewellery';
+    // Fetch products for this category from API
+    React.useEffect(() => {
+        const fetchCategoryProducts = async () => {
+            setLoading(true);
+            try {
+                const res = await fetch(`http://localhost:5000/api/products?category=${encodeURIComponent(title)}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setBaseProducts(data);
+                }
+            } catch (err) {
+                console.error('Error fetching category products:', err);
+            } finally {
+                setLoading(false);
             }
-            return product.category === title || product.category.includes(title);
-        });
+        };
+        fetchCategoryProducts();
     }, [title]);
 
     // 2. Extract unique brands for the sidebar

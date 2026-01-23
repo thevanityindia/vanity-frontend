@@ -3,7 +3,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
 import { FaHeart, FaRegHeart, FaStar, FaChevronDown, FaChevronUp } from 'react-icons/fa';
-import { mockProducts } from '../data/mockProducts';
+
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
 import ProductCard from './ProductCard'; // Reuse for recommended section
@@ -33,15 +33,7 @@ const ProductDetails = () => {
             setActiveImage(0);
             setShowReviewForm(false);
 
-            // 1. Check Mock Products first (optimization for static data)
-            const mock = mockProducts.find(p => p.id == id);
-            if (mock) {
-                setProduct(mock);
-                setLoading(false);
-                return;
-            }
-
-            // 2. Fetch from API
+            // Fetch from API
             try {
                 const res = await fetch(`http://localhost:5000/api/products/${id}`);
                 const data = await res.json();
@@ -116,8 +108,23 @@ const ProductDetails = () => {
         setOpenAccordion(openAccordion === section ? null : section);
     };
 
-    // Filter recommended products (exclude current)
-    const recommendedProducts = mockProducts.filter(p => p.id !== id).slice(0, 4);
+    // Fetch recommended products from API
+    const [recommendedProducts, setRecommendedProducts] = React.useState([]);
+
+    React.useEffect(() => {
+        const fetchRecommended = async () => {
+            try {
+                const res = await fetch(`http://localhost:5000/api/products?limit=4&exclude=${id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setRecommendedProducts(data);
+                }
+            } catch (err) {
+                console.error('Error fetching recommended products:', err);
+            }
+        };
+        if (product) fetchRecommended();
+    }, [id, product]);
 
     // Mock Thumbnails (Repeat the same image or use placeholders if no multiple images)
     // In real app, product.images would be an array

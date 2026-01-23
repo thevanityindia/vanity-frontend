@@ -4,7 +4,7 @@ import { FaUser, FaHeart, FaShoppingBag, FaSearch, FaMapMarkerAlt, FaIdCard, FaS
 import logo from '../assets/logo.jpg';
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
-import { mockProducts } from '../data/mockProducts';
+
 import Fuse from 'fuse.js';
 import './Header.css';
 
@@ -25,10 +25,28 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
-    // Initialize Fuse
-    const fuse = new Fuse(mockProducts, {
+    const [allProducts, setAllProducts] = useState([]);
+
+    // Fetch all products for search
+    useEffect(() => {
+        const fetchProducts = async () => {
+            try {
+                const res = await fetch('http://localhost:5000/api/products');
+                if (res.ok) {
+                    const data = await res.json();
+                    setAllProducts(data);
+                }
+            } catch (err) {
+                console.error('Error fetching products for search:', err);
+            }
+        };
+        fetchProducts();
+    }, []);
+
+    // Initialize Fuse with fetched products
+    const fuse = new Fuse(allProducts, {
         keys: ['name', 'brand', 'category'],
-        threshold: 0.4, // Standard fuzziness
+        threshold: 0.4,
         includeScore: true
     });
 
@@ -51,10 +69,8 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                 setSuggestions(results.slice(0, 5).map(r => r.item));
             } else {
                 setSuggestions([]);
-                // Try to find a "Did you mean" validation with looser threshold
-                // or just pick the closest match if any exists but was filtered out (though 0.4 is generous)
-                // Let's create a very loose fuse just for suggestion
-                const looseFuse = new Fuse(mockProducts, {
+                // Try to find a "Did you mean" suggestion with looser threshold
+                const looseFuse = new Fuse(allProducts, {
                     keys: ['name', 'brand'],
                     threshold: 0.7
                 });

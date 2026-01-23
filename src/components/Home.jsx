@@ -1,7 +1,7 @@
 import React from 'react';
 import Hero from './Hero';
 import ProductSlider from './ProductSlider';
-import { mockProducts } from '../data/mockProducts';
+
 import offerMid1 from '../assets/banners/offer_mid_1.png';
 import offerMid2 from '../assets/banners/offer_mid_2.png';
 
@@ -10,7 +10,7 @@ const Home = ({ products }) => {
         <>
             <Hero />
 
-            <ProductSlider title="Trending Now" products={mockProducts} />
+            <ProductSlider title="Trending Now" products={products.slice(0, 10)} />
 
             {/* Offer Banner 1 */}
             <div className="offer-banner-container" style={{ width: '100%', margin: '20px 0', display: 'flex', justifyContent: 'center' }}>
@@ -21,7 +21,7 @@ const Home = ({ products }) => {
                 />
             </div>
 
-            <ProductSlider title="New Arrivals" products={products.concat(mockProducts).slice(0, 10)} />
+            <ProductSlider title="New Arrivals" products={products.slice(10, 20)} />
 
             {/* Offer Banner 2 */}
             <div className="offer-banner-container" style={{ width: '100%', margin: '20px 0', display: 'flex', justifyContent: 'center' }}>
@@ -32,7 +32,7 @@ const Home = ({ products }) => {
                 />
             </div>
 
-            <ProductSlider title="More" products={mockProducts.slice(5, 10)} />
+            <ProductSlider title="More" products={products.slice(20, 30)} />
         </>
     );
 };
