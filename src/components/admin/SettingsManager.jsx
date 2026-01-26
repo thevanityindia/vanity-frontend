@@ -13,6 +13,7 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import API_BASE_URL from '../../config';
 import './SettingsManager.css';
 
 const SettingsManager = () => {
@@ -110,7 +111,7 @@ const SettingsManager = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('adminToken');
-            const response = await fetch('http://localhost:5000/api/admin/settings', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/settings`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -192,7 +193,7 @@ const SettingsManager = () => {
             // Save each section
             const sections = Object.keys(settings);
             const promises = sections.map(section => {
-                return fetch(`http://localhost:5000/api/admin/settings/${section}`, {
+                return fetch(`${API_BASE_URL}/api/admin/settings/${section}`, {
                     method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',

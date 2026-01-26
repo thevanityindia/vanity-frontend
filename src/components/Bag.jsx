@@ -2,13 +2,16 @@ import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
-import './InfoPage.css'; // Reusing some basic styles
+import './Bag.css';
+import { useConfirm } from '../context/ConfirmContext';
 
 const Bag = () => {
     const { isAuthenticated } = useAuth();
-    const { cartItems, removeFromBag, updateQuantity } = useShop();
+    const { cartItems, removeFromBag, updateQuantity, clearCart } = useShop();
     const navigate = useNavigate();
+    const confirm = useConfirm();
 
+    // ... (rest of code)
     if (!isAuthenticated) {
         return (
             <div className="info-page">
@@ -34,73 +37,88 @@ const Bag = () => {
     }
 
     const totalAmount = cartItems.reduce((acc, item) => {
-        // Parse price removing currency symbol and commas
-        const price = parseFloat(item.price.replace(/[^\d.]/g, ''));
+        const price = parseFloat(item.price) || 0;
         return acc + price * item.quantity;
     }, 0);
 
     return (
-        <div className="info-page">
-            <div className="info-container" style={{ maxWidth: '1000px' }}>
-                <h1>My Shopping Bag ({cartItems.length} items)</h1>
+        <div className="bag-page">
+            <div className="bag-container">
+                <div className="bag-header">
+                    <h1>My Shopping Bag ({cartItems.length} items)</h1>
+                    {cartItems.length > 0 && (
+                        <button
+                            className="clear-all-btn"
+                            onClick={async () => {
+                                const confirmed = await confirm({
+                                    title: 'Clear Bag',
+                                    message: 'Are you sure you want to remove all items from your bag? This action cannot be undone.',
+                                    confirmText: 'Yes, Clear All',
+                                    cancelText: 'Keep Items',
+                                    type: 'danger'
+                                });
+                                if (confirmed) clearCart();
+                            }}
+                        >
+                            Clear All
+                        </button>
+                    )}
+                </div>
 
                 {cartItems.length === 0 ? (
-                    <div className="empty-bag" style={{ textAlign: 'center', padding: '3rem 0' }}>
+                    <div className="empty-bag">
                         <p>Your bag is currently empty.</p>
-                        <Link to="/" style={{ textDecoration: 'underline', fontWeight: 'bold' }}>Start Shopping</Link>
+                        <Link to="/">Start Shopping</Link>
                     </div>
                 ) : (
-                    <div className="bag-grid" style={{ display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '30px', marginTop: '30px' }}>
+                    <div className="bag-grid">
                         <div className="bag-items">
                             {cartItems.map(item => (
-                                <div key={item.id} className="bag-item" style={{ display: 'flex', gap: '20px', marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '20px' }}>
-                                    <div className="item-image" style={{ width: '120px', height: '120px', background: '#f9f9f9', borderRadius: '8px' }}>
-                                        <img src={item.image} alt={item.name} style={{ width: '100%', height: '100%', objectFit: 'contain' }} />
+                                <div key={item.id} className="bag-item">
+                                    <div className="item-image">
+                                        <img src={item.images?.[0]?.imageUrl || item.image || 'https://via.placeholder.com/150'} alt={item.name} />
                                     </div>
-                                    <div className="item-details" style={{ flex: 1 }}>
-                                        <div style={{ fontWeight: 'bold', textTransform: 'uppercase', fontSize: '0.8rem', color: '#666' }}>{item.brand}</div>
-                                        <h3 style={{ margin: '5px 0', fontSize: '1.1rem' }}>{item.name}</h3>
-                                        <div style={{ margin: '10px 0', fontWeight: 'bold' }}>{item.price}</div>
+                                    <div className="item-details">
+                                        <div className="item-brand">{item.brand}</div>
+                                        <h3 className="item-name">{item.name}</h3>
+                                        <div className="item-price">₹{Number(item.price).toLocaleString()}</div>
 
-                                        <div className="item-actions" style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '10px' }}>
-                                            <div className="qty-control" style={{ display: 'flex', alignItems: 'center', border: '1px solid #ddd', borderRadius: '4px' }}>
-                                                <button onClick={() => updateQuantity(item.id, -1)} style={{ padding: '5px 10px', border: 'none', background: 'transparent', cursor: 'pointer' }}>-</button>
-                                                <span style={{ padding: '0 10px' }}>{item.quantity}</span>
-                                                <button onClick={() => updateQuantity(item.id, 1)} style={{ padding: '5px 10px', border: 'none', background: 'transparent', cursor: 'pointer' }}>+</button>
+                                        <div style={{ display: 'flex', gap: '20px', alignItems: 'center', marginTop: '15px' }}>
+                                            <div className="qty-control">
+                                                <input
+                                                    type="number"
+                                                    min="1"
+                                                    value={item.quantity}
+                                                    onChange={(e) => updateQuantity(item.id, parseInt(e.target.value))}
+                                                />
                                             </div>
-                                            <button onClick={() => removeFromBag(item.id)} style={{ background: 'none', border: 'none', textDecoration: 'underline', color: '#666', cursor: 'pointer', fontSize: '0.9rem' }}>Remove</button>
+                                            <button className="remove-btn" onClick={() => removeFromBag(item.id)}>
+                                                Remove
+                                            </button>
                                         </div>
                                     </div>
                                 </div>
                             ))}
                         </div>
 
-                        <div className="bag-summary" style={{ background: '#f9f9f9', padding: '20px', borderRadius: '8px', height: 'fit-content' }}>
-                            <h3 style={{ marginTop: 0, borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>Order Summary</h3>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
+                        <div className="bag-summary">
+                            {/* Keep existing summary logic but wrap in correct class */}
+                            <h3>Order Summary</h3>
+                            <div className="summary-row">
                                 <span>Subtotal</span>
-                                <span>₹{totalAmount.toFixed(2)}</span>
+                                <span>₹{totalAmount.toLocaleString()}</span>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '15px 0' }}>
+                            <div className="summary-row">
                                 <span>Shipping</span>
-                                <span style={{ color: 'green' }}>FREE</span>
+                                <span>Free</span>
                             </div>
-                            <div style={{ display: 'flex', justifyContent: 'space-between', margin: '20px 0 0', paddingTop: '15px', borderTop: '1px solid #ddd', fontWeight: 'bold', fontSize: '1.2rem' }}>
+                            <div className="summary-row total">
                                 <span>Total</span>
-                                <span>₹{totalAmount.toFixed(2)}</span>
+                                <span>₹{totalAmount.toLocaleString()}</span>
                             </div>
-
-                            <button style={{
-                                width: '100%',
-                                background: '#000',
-                                color: '#fff',
-                                border: 'none',
-                                padding: '15px',
-                                borderRadius: '30px',
-                                marginTop: '20px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer'
-                            }}>Checkout</button>
+                            <button className="checkout-btn" onClick={() => navigate('/checkout')}>
+                                Proceed to Checkout
+                            </button>
                         </div>
                     </div>
                 )}

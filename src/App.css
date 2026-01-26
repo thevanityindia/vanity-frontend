@@ -16,8 +16,13 @@
 
 /* Loading spinner animation */
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+  0% {
+    transform: rotate(0deg);
+  }
+
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .product-section {
@@ -38,9 +43,16 @@
 
 .product-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  gap: 2rem;
-  justify-items: center;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 30px;
+  justify-items: stretch;
+}
+
+@media (max-width: 1100px) {
+  .product-grid {
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+  }
 }
 
 @media (max-width: 768px) {
@@ -51,14 +63,14 @@
 
   .product-grid {
     grid-template-columns: repeat(2, 1fr);
-    /* Force 2 columns on mobile like Sephora */
-    gap: 1rem;
+    gap: 15px;
+    padding: 0 10px;
   }
 }
 
 @media (max-width: 480px) {
   .product-grid {
-    /* Still keep 2 columns for "app-like" feel, but maybe tighter gaps */
-    gap: 0.5rem;
+    gap: 10px;
+    padding: 0 5px;
   }
 }

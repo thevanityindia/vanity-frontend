@@ -1,20 +1,29 @@
 .product-details-page {
-    padding: 40px 20px;
+    padding: 60px 20px;
     max-width: 1200px;
     margin: 0 auto;
     background-color: #fff;
     font-family: 'Inter', sans-serif;
 }
 
-.pd-breadcrumb {
-    font-size: 0.9rem;
-    color: #555;
-    margin-bottom: 25px;
+@media (max-width: 768px) {
+    .product-details-page {
+        padding: 10px 15px;
+        /* Reduced top padding */
+    }
 }
 
-.pd-breadcrumb span {
-    color: #999;
-    margin: 0 8px;
+.pd-breadcrumb {
+    font-size: 0.85rem;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+@media (max-width: 768px) {
+    .pd-breadcrumb {
+        margin-bottom: 15px;
+        font-size: 0.75rem;
+    }
 }
 
 .pd-container {
@@ -28,7 +37,13 @@
 @media (max-width: 900px) {
     .pd-container {
         grid-template-columns: 1fr;
-        gap: 40px;
+        gap: 30px;
+    }
+}
+
+@media (max-width: 480px) {
+    .pd-container {
+        gap: 20px;
     }
 }
 
@@ -60,6 +75,17 @@
     }
 }
 
+@media (max-width: 900px) {
+    .pd-thumbnails::-webkit-scrollbar {
+        display: none;
+    }
+
+    .pd-thumbnails {
+        scrollbar-width: none;
+        padding: 5px 0;
+    }
+}
+
 .thumb-image {
     width: 80px;
     height: 80px;
@@ -87,11 +113,24 @@
     aspect-ratio: 4/5;
 }
 
+@media (max-width: 768px) {
+    .pd-main-image {
+        aspect-ratio: 4/3;
+        /* Landscape orientation to save vertical space */
+        margin: 0 -15px;
+        border-radius: 0;
+        max-height: 380px;
+        /* Force limit on height */
+    }
+}
+
 .pd-main-image img {
     width: 100%;
     height: 100%;
     display: block;
-    object-fit: cover;
+    object-fit: contain;
+    /* Ensure whole product is visible */
+    background: #fff;
 }
 
 /* Info Section */
@@ -100,23 +139,29 @@
 }
 
 .pd-brand {
-    font-size: 1rem;
+    font-size: 0.9rem;
     font-weight: 700;
     color: #000;
     text-transform: uppercase;
-    letter-spacing: 0.5px;
-    margin-bottom: 10px;
+    letter-spacing: 1px;
+    margin-bottom: 5px;
     border-bottom: 2px solid #000;
     display: inline-block;
     padding-bottom: 2px;
 }
 
 .pd-title {
-    font-size: 2rem;
+    font-size: 2.2rem;
     font-weight: 500;
     color: #000;
     margin: 5px 0 10px;
     line-height: 1.2;
+}
+
+@media (max-width: 768px) {
+    .pd-title {
+        font-size: 1.6rem;
+    }
 }
 
 .pd-description-short {
@@ -194,6 +239,13 @@
     gap: 15px;
 }
 
+@media (max-width: 480px) {
+    .action-buttons-row {
+        flex-direction: column;
+        gap: 10px;
+    }
+}
+
 .quantity-selector {
     display: flex;
     align-items: center;
@@ -219,17 +271,21 @@
 .pd-add-to-bag-btn {
     flex: 2;
     background-color: #ce0024;
-    /* Sephora Red/Primary Action */
     color: #fff;
     border: none;
     border-radius: 30px;
-    /* Pill shape */
     font-size: 1rem;
     font-weight: 700;
     cursor: pointer;
     transition: background 0.3s;
     height: 50px;
     text-transform: uppercase;
+}
+
+@media (max-width: 768px) {
+    .pd-add-to-bag-btn {
+        font-size: 0.9rem;
+    }
 }
 
 .pd-add-to-bag-btn:hover {
@@ -260,12 +316,20 @@
 }
 
 .pd-shipping-info {
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     color: #555;
-    background: #f5f5f5;
+    background: #f9f9f9;
     padding: 15px;
+    border: 1px solid #eee;
     border-radius: 4px;
     margin-bottom: 30px;
+}
+
+@media (max-width: 768px) {
+    .pd-shipping-info {
+        padding: 12px;
+        font-size: 0.8rem;
+    }
 }
 
 .info-row {
@@ -312,6 +376,13 @@
 .recommended-section {
     padding-top: 60px;
     border-top: 1px solid #eee;
+    margin-top: 40px;
+}
+
+@media (max-width: 768px) {
+    .recommended-section {
+        padding-top: 40px;
+    }
 }
 
 .recommended-title {

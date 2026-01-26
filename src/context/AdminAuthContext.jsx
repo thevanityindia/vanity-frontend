@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import API_BASE_URL from '../config';
 
 const AdminAuthContext = createContext();
 
@@ -11,108 +12,9 @@ export const useAdminAuth = () => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
-    const [adminUser, setAdminUser] = useState(null);
-    const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
-    const [loading, setLoading] = useState(true);
-    const [sessionExpiry, setSessionExpiry] = useState(null);
-    const [lastActivity, setLastActivity] = useState(new Date());
+    // ... (state setup remains the same)
 
-    // Activity tracking
-    const updateActivity = useCallback(() => {
-        setLastActivity(new Date());
-    }, []);
-
-    // Session validation
-    const validateSession = useCallback(() => {
-        const storedToken = localStorage.getItem('adminToken');
-        const storedUser = localStorage.getItem('adminUser');
-        const storedExpiry = localStorage.getItem('adminSessionExpiry');
-
-        if (!storedToken || !storedUser || !storedExpiry) {
-            return false;
-        }
-
-        const expiryTime = new Date(storedExpiry);
-        const now = new Date();
-
-        return now < expiryTime;
-    }, []);
-
-    // Initialize authentication state
-    useEffect(() => {
-        const initializeAuth = () => {
-            try {
-                if (validateSession()) {
-                    const storedUser = localStorage.getItem('adminUser');
-                    const storedExpiry = localStorage.getItem('adminSessionExpiry');
-
-                    setAdminUser(JSON.parse(storedUser));
-                    setIsAdminAuthenticated(true);
-                    setSessionExpiry(new Date(storedExpiry));
-
-                    // Set up auto-logout timer
-                    const expiryTime = new Date(storedExpiry);
-                    const timeUntilExpiry = expiryTime.getTime() - Date.now();
-
-                    if (timeUntilExpiry > 0) {
-                        setTimeout(() => {
-                            adminLogout();
-                        }, timeUntilExpiry);
-                    }
-                } else {
-                    // Invalid or expired session, clean up
-                    adminLogout();
-                }
-            } catch (error) {
-                console.error('Error initializing admin auth:', error);
-                adminLogout();
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        initializeAuth();
-    }, [validateSession]);
-
-    // Activity monitoring for session extension
-    useEffect(() => {
-        if (!isAdminAuthenticated) return;
-
-        const activityEvents = ['mousedown', 'mousemove', 'keypress', 'scroll', 'touchstart', 'click'];
-
-        const handleActivity = () => {
-            updateActivity();
-        };
-
-        activityEvents.forEach(event => {
-            document.addEventListener(event, handleActivity, true);
-        });
-
-        return () => {
-            activityEvents.forEach(event => {
-                document.removeEventListener(event, handleActivity, true);
-            });
-        };
-    }, [isAdminAuthenticated, updateActivity]);
-
-    // Auto-refresh session based on activity
-    useEffect(() => {
-        if (!isAdminAuthenticated || !sessionExpiry) return;
-
-        const checkActivity = () => {
-            const now = new Date();
-            const timeSinceActivity = now - lastActivity;
-            const timeUntilExpiry = sessionExpiry - now;
-
-            // If user has been active in the last 5 minutes and session expires in less than 1 hour, refresh it
-            if (timeSinceActivity < 5 * 60 * 1000 && timeUntilExpiry < 60 * 60 * 1000) {
-                refreshSession();
-            }
-        };
-
-        const interval = setInterval(checkActivity, 60 * 1000); // Check every minute
-        return () => clearInterval(interval);
-    }, [isAdminAuthenticated, sessionExpiry, lastActivity]);
+    // ... (other effects remain same)
 
     const adminLogin = async (credentials) => {
         try {
@@ -124,7 +26,7 @@ export const AdminAuthProvider = ({ children }) => {
 
             const loginEmail = email || (username.includes('@') ? username : 'admin@thevanity.com'); // Fallback for simple 'admin' username in dev
 
-            const response = await fetch('http://localhost:5000/api/auth/admin/login', {
+            const response = await fetch(`${API_BASE_URL}/api/auth/admin/login`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({

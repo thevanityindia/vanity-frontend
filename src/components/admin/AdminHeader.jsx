@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { FiMenu, FiBell, FiUser, FiLogOut, FiSettings, FiRefreshCw } from 'react-icons/fi';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import API_BASE_URL from '../../config';
 import './AdminHeader.css';
 
 const AdminHeader = ({ user, onToggleSidebar, onLogout }) => {
@@ -14,7 +15,7 @@ const AdminHeader = ({ user, onToggleSidebar, onLogout }) => {
         try {
             setLoadingNotifications(true);
             const token = localStorage.getItem('adminToken');
-            const response = await fetch('http://localhost:5000/api/admin/notifications?read=false', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/notifications?read=false`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -43,7 +44,7 @@ const AdminHeader = ({ user, onToggleSidebar, onLogout }) => {
     const markAsRead = async (id) => {
         try {
             const token = localStorage.getItem('adminToken');
-            await fetch(`http://localhost:5000/api/admin/notifications/${id}/read`, {
+            await fetch(`${API_BASE_URL}/api/admin/notifications/${id}/read`, {
                 method: 'PUT',
                 headers: {
                     'Authorization': `Bearer ${token}`

@@ -13,6 +13,7 @@ import {
     FiActivity
 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
+import API_BASE_URL from '../../config';
 import './AnalyticsDashboard.css';
 
 const AnalyticsDashboard = () => {
@@ -56,11 +57,11 @@ const AnalyticsDashboard = () => {
             const headers = { 'Authorization': `Bearer ${token}` };
 
             // Fetch Overview Data
-            const overviewResponse = await fetch('http://localhost:5000/api/admin/analytics/overview', { headers });
+            const overviewResponse = await fetch(`${API_BASE_URL}/api/admin/analytics/overview`, { headers });
             const overviewResult = await overviewResponse.json();
 
             // Fetch Sales Chart Data
-            const salesResponse = await fetch(`http://localhost:5000/api/admin/analytics/sales?startDate=${dateRange.start}&endDate=${dateRange.end}`, { headers });
+            const salesResponse = await fetch(`${API_BASE_URL}/api/admin/analytics/sales?startDate=${dateRange.start}&endDate=${dateRange.end}`, { headers });
             const salesResult = await salesResponse.json();
 
             if (overviewResult.success && salesResult.success) {

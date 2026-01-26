@@ -16,21 +16,25 @@
 
 .product-slider-container {
     width: 100%;
-    overflow: hidden;
+    max-width: 100vw;
+    overflow-x: auto;
     position: relative;
+    padding-bottom: 20px;
+    scroll-behavior: smooth;
+    -webkit-overflow-scrolling: touch;
+    cursor: grab;
+    display: flex;
+    /* Ensure inner content doesn't break */
+}
+
+.product-slider-container::-webkit-scrollbar {
+    display: none;
 }
 
 .product-slider-track {
     display: flex;
-    gap: 20px;
-    width: max-content;
-    animation: scroll 30s linear infinite;
-    /* Adjust speed here */
-}
-
-.product-slider-container:hover .product-slider-track {
-    animation-play-state: paused;
-    /* Pause on hover for interaction */
+    gap: 30px;
+    padding: 0 40px;
 }
 
 .product-slider-item {
@@ -63,10 +67,22 @@
 
 @media (max-width: 768px) {
     .product-slider-item {
-        width: 220px;
+        width: 160px;
+        /* Smaller cards for mobile like Sephora app */
+    }
+
+    .product-slider-track {
+        gap: 15px;
+        padding: 0 15px;
+        /* Less padding on mobile */
+    }
+
+    .product-slider-section {
+        padding: 20px 0;
     }
 
     .product-slider-section h2 {
-        font-size: 1.5rem;
+        font-size: 1.2rem;
+        margin-bottom: 20px;
     }
 }

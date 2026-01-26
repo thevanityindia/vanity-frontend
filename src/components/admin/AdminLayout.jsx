@@ -3,6 +3,7 @@ import { Outlet, useNavigate, useLocation } from 'react-router-dom';
 import { useAdminAuth } from '../../context/AdminAuthContext';
 import AdminSidebar from './AdminSidebar';
 import AdminHeader from './AdminHeader';
+import API_BASE_URL from '../../config';
 import './AdminLayout.css';
 
 const AdminLayout = () => {
@@ -36,9 +37,9 @@ const AdminLayout = () => {
 
                 // Parallel fetching for performance
                 const [ordersRes, inventoryRes, notificationsRes] = await Promise.all([
-                    fetch('http://localhost:5000/api/admin/orders?status=Pending&limit=1', { headers }),
-                    fetch('http://localhost:5000/api/admin/inventory/low-stock?limit=1', { headers }),
-                    fetch('http://localhost:5000/api/admin/notifications?read=false&limit=1', { headers })
+                    fetch(`${API_BASE_URL}/api/admin/orders?status=Pending&limit=1`, { headers }),
+                    fetch(`${API_BASE_URL}/api/admin/inventory/low-stock?limit=1`, { headers }),
+                    fetch(`${API_BASE_URL}/api/admin/notifications?read=false&limit=1`, { headers })
                 ]);
 
                 const ordersData = await ordersRes.json();

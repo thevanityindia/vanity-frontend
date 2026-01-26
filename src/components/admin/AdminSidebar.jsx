@@ -13,6 +13,7 @@ import {
     FiBell,
     FiLogOut
 } from 'react-icons/fi';
+import logo from '../../assets/logo.jpg';
 import './AdminSidebar.css';
 
 const AdminSidebar = ({ collapsed, currentSection, badges }) => {
@@ -107,7 +108,7 @@ const AdminSidebar = ({ collapsed, currentSection, badges }) => {
         <aside className={`admin-sidebar ${collapsed ? 'collapsed' : ''}`}>
             <div className="sidebar-header">
                 <div className="sidebar-brand">
-                    <div className="brand-logo">TV</div>
+                    <img src={logo} alt="The Vanity" className="sidebar-logo-img" style={{ maxHeight: '40px', borderRadius: '50%' }} />
                     {!collapsed && <span className="brand-text">The Vanity</span>}
                 </div>
             </div>

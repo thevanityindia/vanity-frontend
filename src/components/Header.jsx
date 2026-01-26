@@ -4,9 +4,11 @@ import { FaUser, FaHeart, FaShoppingBag, FaSearch, FaMapMarkerAlt, FaIdCard, FaS
 import logo from '../assets/logo.jpg';
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
+import API_BASE_URL from '../config';
 
 import Fuse from 'fuse.js';
 import './Header.css';
+import MiniBag from './MiniBag';
 
 const Header = ({ toggleMenu, isMenuOpen }) => {
     const { user, isAuthenticated, logout } = useAuth();
@@ -16,12 +18,20 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
     const [suggestions, setSuggestions] = useState([]);
     const [didYouMean, setDidYouMean] = useState(null);
     const [isScrolled, setIsScrolled] = useState(false);
+    const [isMiniBagOpen, setIsMiniBagOpen] = useState(false);
 
     useEffect(() => {
         const handleScroll = () => {
-            setIsScrolled(window.scrollY > 50);
+            const scrollPos = window.scrollY;
+            // High threshold to fold (200px) and very low to unfold (20px)
+            // This ensures the 100px+ height change of the header doesn't cause a loop
+            setIsScrolled(prev => {
+                if (scrollPos > 200 && !prev) return true;
+                if (scrollPos < 20 && prev) return false;
+                return prev;
+            });
         };
-        window.addEventListener('scroll', handleScroll);
+        window.addEventListener('scroll', handleScroll, { passive: true });
         return () => window.removeEventListener('scroll', handleScroll);
     }, []);
 
@@ -31,7 +41,7 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await fetch('http://localhost:5000/api/products');
+                const res = await fetch(`${API_BASE_URL}/api/products`);
                 if (res.ok) {
                     const data = await res.json();
                     setAllProducts(data);
@@ -104,7 +114,9 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                         </Link>
                     ) : (
                         <div className="top-link user-menu">
-                            <FaUser /> <span>Hi, {user?.name}</span>
+                            <Link to="/profile" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                <FaUser /> <span>Hi, {user?.name || user?.firstName}</span>
+                            </Link>
                             <span className="separator">|</span>
                             <a href="#" onClick={handleLogout} className="logout-link">
                                 <FaSignOutAlt /> Logout
@@ -139,28 +151,22 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                             </span>
                         )}
                     </Link>
-                    <Link to="/bag" className="top-link bag-link" style={{ position: 'relative' }}>
-                        <FaShoppingBag /> <span>Bag</span>
-                        {cartCount > 0 && (
-                            <span style={{
-                                position: 'absolute',
-                                top: '-8px',
-                                right: '-8px',
-                                background: '#e63946',
-                                color: '#fff',
-                                borderRadius: '50%',
-                                fontSize: '0.7rem',
-                                width: '18px',
-                                height: '18px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 'bold'
-                            }}>
-                                {cartCount}
-                            </span>
-                        )}
-                    </Link>
+                    <div
+                        className="top-link bag-link-container"
+                        style={{ position: 'relative' }}
+                        onMouseEnter={() => setIsMiniBagOpen(true)}
+                        onMouseLeave={() => setIsMiniBagOpen(false)}
+                    >
+                        <Link to="/bag" className="top-link bag-link">
+                            <FaShoppingBag /> <span>Bag</span>
+                            {cartCount > 0 && (
+                                <span className="bag-count-badge">
+                                    {cartCount}
+                                </span>
+                            )}
+                        </Link>
+                        <MiniBag isOpen={isMiniBagOpen} onClose={() => setIsMiniBagOpen(false)} />
+                    </div>
                 </div>
             </div>
             <div className="header-main">
@@ -175,7 +181,7 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                     </Link>
 
                     <div className="mobile-header-icons">
-                        <Link to={isAuthenticated ? "/account" : "/login"} className="mobile-icon-link">
+                        <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-icon-link">
                             <FaUser />
                         </Link>
                         <Link to="/bag" className="mobile-icon-link" style={{ position: 'relative' }}>
@@ -195,6 +201,9 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                         value={query}
                         onChange={handleSearchChange}
                     />
+                    <button className="mobile-search-btn">
+                        <FaSearch />
+                    </button>
 
                     {/* Search Suggestions Dropdown */}
                     {(suggestions.length > 0 || didYouMean) && (

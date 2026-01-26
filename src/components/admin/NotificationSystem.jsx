@@ -17,6 +17,7 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import API_BASE_URL from '../../config';
 import './NotificationSystem.css';
 
 const NotificationSystem = () => {
@@ -69,7 +70,7 @@ const NotificationSystem = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('adminToken');
-            const response = await fetch('http://localhost:5000/api/admin/notifications', {
+            const response = await fetch(`${API_BASE_URL}/api/admin/notifications`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }

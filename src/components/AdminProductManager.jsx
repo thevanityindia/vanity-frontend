@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import './AdminProductManager.css';
 import { toast } from 'react-hot-toast';
-
-const API_BASE_URL = 'http://localhost:5000/api';
+import API_BASE_URL from '../config';
 
 const CATEGORIES = [
     'Makeup',
@@ -167,13 +166,13 @@ const AdminProductManager = () => {
 
             {/* View Mode Toggle */}
             <div className="view-mode-toggle">
-                <button 
+                <button
                     className={`toggle-btn ${viewMode === 'all' ? 'active' : ''}`}
                     onClick={() => setViewMode('all')}
                 >
                     All Products
                 </button>
-                <button 
+                <button
                     className={`toggle-btn ${viewMode === 'category' ? 'active' : ''}`}
                     onClick={() => setViewMode('category')}
                 >
@@ -383,7 +382,7 @@ const AdminProductManager = () => {
                                             ))
                                         )}
                                         {categoryProducts.length > 3 && (
-                                            <button 
+                                            <button
                                                 className="view-all-btn"
                                                 onClick={() => {
                                                     setViewMode('all');

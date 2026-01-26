@@ -20,9 +20,10 @@ import {
 } from 'react-icons/fi';
 import { toast } from 'react-hot-toast';
 import { useAdminAuth } from '../../context/AdminAuthContext';
+import API_BASE_URL from '../../config';
 import './UserManager.css';
 
-const API_BASE_URL = 'http://localhost:5000/api/admin';
+const API_ENDPOINT = `${API_BASE_URL}/api/admin`;
 
 const UserManager = () => {
     const { hasPermission } = useAdminAuth();
@@ -62,7 +63,7 @@ const UserManager = () => {
         try {
             setLoading(true);
             const token = localStorage.getItem('adminToken');
-            const response = await fetch(`${API_BASE_URL}/users`, {
+            const response = await fetch(`${API_ENDPOINT}/users`, {
                 headers: {
                     'Authorization': `Bearer ${token}`
                 }
@@ -150,7 +151,7 @@ const UserManager = () => {
 
         try {
             const token = localStorage.getItem('adminToken');
-            const response = await fetch(`${API_BASE_URL}/users/${userId}/status`, {
+            const response = await fetch(`${API_ENDPOINT}/users/${userId}/status`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',

@@ -1,0 +1,205 @@
+.mini-bag-overlay {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    width: 350px;
+    background: white;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+    z-index: 2001;
+    border: 1px solid #eee;
+}
+
+.mini-bag-content {
+    display: flex;
+    flex-direction: column;
+}
+
+.mini-bag-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 20px;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.mini-bag-header h3 {
+    margin: 0;
+    font-size: 1rem;
+    font-weight: 700;
+    letter-spacing: 1px;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #333;
+}
+
+.mini-bag-items {
+    max-height: 400px;
+    overflow-y: auto;
+    padding: 10px 0;
+}
+
+.mini-bag-item {
+    display: flex;
+    padding: 15px 20px;
+    gap: 15px;
+    border-bottom: 1px solid #fafafa;
+}
+
+.item-image {
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+}
+
+.item-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.item-details {
+    flex: 1;
+}
+
+.item-brand-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-bottom: 4px;
+}
+
+.item-brand {
+    font-weight: 700;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    color: #000;
+}
+
+.remove-item {
+    background: none;
+    border: none;
+    color: #999;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+}
+
+.remove-item:hover {
+    color: #ff0000;
+}
+
+.item-name {
+    margin: 0 0 4px 0;
+    font-size: 0.9rem;
+    color: #333;
+    line-height: 1.2;
+}
+
+.item-variant {
+    margin: 0 0 4px 0;
+    font-size: 0.85rem;
+    color: #777;
+}
+
+.item-price {
+    margin: 0 0 4px 0;
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.item-qty {
+    margin: 0;
+    font-size: 0.9rem;
+    color: #444;
+}
+
+.mini-bag-footer {
+    padding: 20px;
+    background: #fff;
+    border-top: 1px solid #eee;
+}
+
+.total-row {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.total-label {
+    display: block;
+    font-size: 1.1rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.loyalty-points {
+    display: block;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #000;
+}
+
+.footer-actions {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 15px;
+}
+
+.sign-in-link {
+    text-decoration: none;
+    color: #000;
+    font-size: 0.9rem;
+    line-height: 1.2;
+}
+
+.sign-in-link span {
+    text-decoration: underline;
+    font-size: 0.85rem;
+}
+
+.view-bag-btn {
+    flex: 1;
+    background: #e60023;
+    /* Vibrant red like image */
+    color: white;
+    border: none;
+    padding: 12px 0;
+    font-weight: 700;
+    font-size: 0.9rem;
+    cursor: pointer;
+    letter-spacing: 1px;
+    border-radius: 2px;
+}
+
+.view-bag-btn:hover {
+    background: #cc001f;
+}
+
+.empty-mini-bag {
+    padding: 30px;
+    text-align: center;
+    color: #777;
+}
+
+/* Custom Scrollbar */
+.mini-bag-items::-webkit-scrollbar {
+    width: 6px;
+}
+
+.mini-bag-items::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+.mini-bag-items::-webkit-scrollbar-thumb {
+    background: #ddd;
+    border-radius: 10px;
+}
+
+.mini-bag-items::-webkit-scrollbar-thumb:hover {
+    background: #ccc;
+}

@@ -6,7 +6,9 @@ import { FaHeart, FaRegHeart, FaStar, FaChevronDown, FaChevronUp } from 'react-i
 
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
-import ProductCard from './ProductCard'; // Reuse for recommended section
+import ProductCard from './ProductCard';
+import ProductSlider from './ProductSlider';
+import API_BASE_URL from '../config';
 import './ProductDetails.css';
 
 const ProductDetails = () => {
@@ -24,6 +26,30 @@ const ProductDetails = () => {
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
 
+    // Fetch recommended products from API
+    const [recommendedProducts, setRecommendedProducts] = useState([]);
+    const [reviewFormData, setReviewFormData] = useState({
+        rating: 5,
+        comment: ''
+    });
+
+    useEffect(() => {
+        const fetchRecommended = async () => {
+            try {
+                const res = await fetch(`${API_BASE_URL}/api/products?limit=10&exclude=${id}`);
+                if (res.ok) {
+                    const data = await res.json();
+                    setRecommendedProducts(data.data || []);
+                }
+            } catch (err) {
+                console.error('Error fetching recommended products:', err);
+            }
+        };
+        // Verify product exists before fetching recommendations if logic depends on it, 
+        // or just fetch general recommendations. The original code waited for product.
+        if (product) fetchRecommended();
+    }, [id, product]);
+
     // Fetch product data
     useEffect(() => {
         const fetchProduct = async () => {
@@ -35,16 +61,11 @@ const ProductDetails = () => {
 
             // Fetch from API
             try {
-                const res = await fetch(`http://localhost:5000/api/products/${id}`);
-                const data = await res.json();
+                const res = await fetch(`${API_BASE_URL}/api/products/${id}`);
+                const resData = await res.json();
                 if (res.ok) {
-                    // Normalize fields if needed (e.g. handle missing reviews/ratings)
-                    setProduct({
-                        ...data,
-                        rating: data.rating || 4.5,
-                        reviews: data.reviews || 0,
-                        originalPrice: data.originalPrice || null
-                    });
+                    const productData = resData.data;
+                    setProduct(productData);
                 } else {
                     setProduct(null);
                 }
@@ -108,52 +129,70 @@ const ProductDetails = () => {
         setOpenAccordion(openAccordion === section ? null : section);
     };
 
-    // Fetch recommended products from API
-    const [recommendedProducts, setRecommendedProducts] = React.useState([]);
 
-    React.useEffect(() => {
-        const fetchRecommended = async () => {
-            try {
-                const res = await fetch(`http://localhost:5000/api/products?limit=4&exclude=${id}`);
-                if (res.ok) {
-                    const data = await res.json();
-                    setRecommendedProducts(data);
-                }
-            } catch (err) {
-                console.error('Error fetching recommended products:', err);
-            }
-        };
-        if (product) fetchRecommended();
-    }, [id, product]);
 
-    // Mock Thumbnails (Repeat the same image or use placeholders if no multiple images)
-    // In real app, product.images would be an array
-    const images = [product.image, product.image, product.image, product.image];
-
-    // Mock Reviews
-    const mockReviews = [
-        {
-            user: "Ananya S.",
-            rating: 5,
-            date: "2 days ago",
-            title: "Absolutely in love!",
-            comment: `I've been wearing this ${product.name} every day since I got it. The quality is amazing and it looks even better in person.`
-        },
-        {
-            user: "Priya M.",
-            rating: 4,
-            date: "1 week ago",
-            title: "Great purchase",
-            comment: "Really happy with the design and finish. Shipping was fast too. deducting one star because the packaging could be slightly better."
-        },
-        {
-            user: "Rhea K.",
-            rating: 5,
-            date: "2 weeks ago",
-            title: "Stunning piece",
-            comment: "Matches perfectly with my outfits. I've received so many compliments!"
+    // Prepare images for gallery
+    const getImageUrl = (url) => {
+        if (url && !url.startsWith('http') && !url.startsWith('data:')) {
+            return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
         }
-    ];
+        return url;
+    };
+
+    const images = product.images?.length > 0
+        ? product.images.map(img => getImageUrl(img.imageUrl))
+        : [getImageUrl(product.image) || 'https://via.placeholder.com/500?text=No+Image'];
+
+    // Ensure we have at least one image to prevent errors
+    if (images.length === 0 || !images[0]) {
+        images[0] = 'https://via.placeholder.com/500?text=No+Image';
+    }
+
+
+    const handleReviewSubmit = async (e) => {
+        e.preventDefault();
+        if (!isAuthenticated) {
+            toast.error('Please sign in to write a review');
+            navigate('/login');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('token');
+            const res = await fetch(`${API_BASE_URL}/api/reviews/${product._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(reviewFormData)
+            });
+
+            const data = await res.json();
+            if (data.success) {
+                toast.success('Thank you for your review!');
+                // Update local product state with new reviews
+                const updatedReviews = data.data;
+                const newNumOfReviews = updatedReviews.length;
+                const newAvgRating = updatedReviews.reduce((acc, item) => item.rating + acc, 0) / newNumOfReviews;
+
+                setProduct(prev => ({
+                    ...prev,
+                    reviews: updatedReviews,
+                    numOfReviews: newNumOfReviews,
+                    averageRating: newAvgRating
+                }));
+
+                setShowReviewForm(false);
+                setReviewFormData({ rating: 5, comment: '' });
+            } else {
+                toast.error(data.error || 'Failed to submit review');
+            }
+        } catch (err) {
+            console.error('Review error:', err);
+            toast.error('Something went wrong');
+        }
+    };
 
     return (
         <div className="product-details-page">
@@ -184,15 +223,15 @@ const ProductDetails = () => {
                 <div className="pd-info-section">
                     <div className="pd-brand">{product.brand}</div>
                     <h1 className="pd-title">{product.name}</h1>
-                    <div className="pd-description-short">{product.description.substring(0, 100)}...</div>
+                    <div className="pd-description-short">{product.description ? product.description.substring(0, 100) : ''}...</div>
 
                     <div className="pd-rating">
                         <div className="stars">
                             {[...Array(5)].map((_, i) => (
-                                <FaStar key={i} color={i < Math.round(product.rating) ? "#000" : "#ddd"} />
+                                <FaStar key={i} color={i < Math.round(product.averageRating || 0) ? "#000" : "#ddd"} />
                             ))}
                         </div>
-                        <span className="review-count">{product.reviews} reviews</span>
+                        <span className="review-count">{(product.numOfReviews || 0)} reviews</span>
                     </div>
 
                     <div className="pd-price-box">
@@ -202,14 +241,33 @@ const ProductDetails = () => {
 
                     <div className="pd-actions">
                         <div className="quantity-selector" style={{ width: 'fit-content', marginBottom: '10px' }}>
-                            <button onClick={() => setQuantity(Math.max(1, quantity - 1))}>-</button>
-                            <span>{quantity}</span>
-                            <button onClick={() => setQuantity(quantity + 1)}>+</button>
+                            <input
+                                type="number"
+                                min="1"
+                                value={quantity}
+                                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
+                                style={{
+                                    width: '60px',
+                                    height: '40px',
+                                    padding: '5px',
+                                    textAlign: 'center',
+                                    border: '1px solid #000',
+                                    borderRadius: '4px',
+                                    fontSize: '1rem',
+                                    fontWeight: '600'
+                                }}
+                            />
                         </div>
                         <div className="action-buttons-row">
-                            <button className="pd-add-to-bag-btn" onClick={handleAddToBag}>
-                                Add to Bag
-                            </button>
+                            {product.stock <= 0 ? (
+                                <button className="pd-add-to-bag-btn disabled" disabled style={{ opacity: 0.5, cursor: 'not-allowed' }}>
+                                    Out of Stock
+                                </button>
+                            ) : (
+                                <button className="pd-add-to-bag-btn" onClick={handleAddToBag}>
+                                    Add to Bag
+                                </button>
+                            )}
                             <button className="pd-wishlist-btn" onClick={handleWishlist}>
                                 {isWishlisted ? <FaHeart color="#e63946" /> : <FaRegHeart />}
                                 <span>{isWishlisted ? 'Wishlisted' : 'Wishlist'}</span>
@@ -251,14 +309,14 @@ const ProductDetails = () => {
                         {/* Reviews Section */}
                         <div className="accordion-item">
                             <button className="accordion-header" onClick={() => toggleAccordion('reviews')}>
-                                Ratings & Reviews ({mockReviews.length})
+                                Ratings & Reviews ({product.reviews?.length || 0})
                                 {openAccordion === 'reviews' ? <FaChevronUp /> : <FaChevronDown />}
                             </button>
                             {openAccordion === 'reviews' && (
                                 <div className="accordion-content">
                                     <div className="reviews-summary" style={{ marginBottom: '20px' }}>
                                         <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Overall Rating</div>
+                                            <div style={{ fontSize: '1.1rem', fontWeight: 'bold' }}>Overall Rating {product.averageRating?.toFixed(1) || '0.0'}</div>
                                             <button
                                                 onClick={() => setShowReviewForm(!showReviewForm)}
                                                 style={{
@@ -271,48 +329,58 @@ const ProductDetails = () => {
                                                     fontSize: '0.9rem'
                                                 }}
                                             >
-                                                Write a Review
+                                                {showReviewForm ? 'Cancel' : 'Write a Review'}
                                             </button>
                                         </div>
                                         {showReviewForm && (
-                                            <div className="write-review-form" style={{ marginTop: '15px', padding: '15px', background: '#f9f9f9', borderRadius: '4px' }}>
+                                            <form onSubmit={handleReviewSubmit} className="write-review-form" style={{ marginTop: '15px', padding: '15px', background: '#f9f9f9', borderRadius: '4px' }}>
                                                 <div style={{ marginBottom: '10px' }}>
                                                     <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem' }}>Rating</label>
                                                     <div className="stars-input">
                                                         {[...Array(5)].map((_, i) => (
-                                                            <FaStar key={i} color="#ddd" style={{ cursor: 'pointer' }} />
+                                                            <FaStar
+                                                                key={i}
+                                                                onClick={() => setReviewFormData({ ...reviewFormData, rating: i + 1 })}
+                                                                color={i < reviewFormData.rating ? "#000" : "#ddd"}
+                                                                style={{ cursor: 'pointer', marginRight: '5px' }}
+                                                            />
                                                         ))}
                                                     </div>
                                                 </div>
                                                 <div style={{ marginBottom: '10px' }}>
-                                                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem' }}>Review Title</label>
-                                                    <input type="text" placeholder="Example: Beautiful ring!" style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px' }} />
+                                                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem' }}>Your Review</label>
+                                                    <textarea
+                                                        required
+                                                        value={reviewFormData.comment}
+                                                        onChange={(e) => setReviewFormData({ ...reviewFormData, comment: e.target.value })}
+                                                        placeholder="Tell us what you like about this product..."
+                                                        style={{ width: '100%', padding: '10px', border: '1px solid #ddd', borderRadius: '4px', minHeight: '100px', fontSize: '0.9rem' }}
+                                                    />
                                                 </div>
-                                                <div style={{ marginBottom: '10px' }}>
-                                                    <label style={{ display: 'block', marginBottom: '5px', fontSize: '0.9rem' }}>Review</label>
-                                                    <textarea placeholder="Tell us what you like about this product..." style={{ width: '100%', padding: '8px', border: '1px solid #ddd', borderRadius: '4px', minHeight: '80px' }} />
-                                                </div>
-                                                <button onClick={() => { toast.success("Review submitted!"); setShowReviewForm(false); }} style={{ padding: '8px 15px', background: '#000', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>Submit Review</button>
-                                            </div>
+                                                <button type="submit" style={{ padding: '10px 20px', background: '#000', color: '#fff', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Submit Review</button>
+                                            </form>
                                         )}
                                     </div>
 
                                     <div className="reviews-list">
-                                        {mockReviews.map((review, idx) => (
-                                            <div key={idx} className="review-item" style={{ marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
-                                                <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
-                                                    <div style={{ fontWeight: 'bold' }}>{review.title}</div>
-                                                    <div style={{ color: '#777', fontSize: '0.85rem' }}>{review.date}</div>
+                                        {product.reviews && product.reviews.length > 0 ? (
+                                            product.reviews.map((review, idx) => (
+                                                <div key={idx} className="review-item" style={{ marginBottom: '20px', borderBottom: '1px solid #eee', paddingBottom: '15px' }}>
+                                                    <div style={{ display: 'flex', justifyContent: 'space-between', marginBottom: '5px' }}>
+                                                        <div style={{ fontWeight: 'bold' }}>{review.name}</div>
+                                                        <div style={{ color: '#777', fontSize: '0.85rem' }}>{new Date(review.createdAt).toLocaleDateString()}</div>
+                                                    </div>
+                                                    <div style={{ marginBottom: '8px' }}>
+                                                        {[...Array(5)].map((_, i) => (
+                                                            <FaStar key={i} size={12} color={i < review.rating ? "#000" : "#ddd"} />
+                                                        ))}
+                                                    </div>
+                                                    <p style={{ fontSize: '0.95rem', color: '#444', lineHeight: '1.5' }}>{review.comment}</p>
                                                 </div>
-                                                <div style={{ marginBottom: '8px' }}>
-                                                    {[...Array(5)].map((_, i) => (
-                                                        <FaStar key={i} size={12} color={i < review.rating ? "#000" : "#ddd"} />
-                                                    ))}
-                                                </div>
-                                                <p style={{ fontSize: '0.95rem', color: '#444', lineHeight: '1.5' }}>{review.comment}</p>
-                                                <div style={{ fontSize: '0.85rem', color: '#666', marginTop: '5px' }}>- {review.user}</div>
-                                            </div>
-                                        ))}
+                                            ))
+                                        ) : (
+                                            <p style={{ textAlign: 'center', color: '#777', padding: '20px 0' }}>No reviews yet. Be the first to review this product!</p>
+                                        )}
                                     </div>
                                 </div>
                             )}
@@ -322,14 +390,11 @@ const ProductDetails = () => {
             </div>
 
             {/* Recommended Products */}
-            <div className="recommended-section">
-                <div className="recommended-title">You May Also Like</div>
-                <div className="recommended-grid">
-                    {recommendedProducts.map(recProduct => (
-                        <ProductCard key={recProduct.id} product={recProduct} />
-                    ))}
+            {recommendedProducts.length > 0 && (
+                <div className="recommended-section" style={{ marginTop: '50px' }}>
+                    <ProductSlider title="You May Also Like" products={recommendedProducts} />
                 </div>
-            </div>
+            )}
         </div>
     );
 };

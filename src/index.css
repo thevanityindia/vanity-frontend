@@ -1,12 +1,5 @@
 /* Global Styles */
-.sticky-header-container {
-  position: sticky;
-  top: 0;
-  z-index: 1000;
-  background-color: #fff;
-  width: 100%;
-}
-
+html,
 body {
   margin: 0;
   padding: 0;
@@ -16,6 +9,17 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+  /* Prevent horizontal scroll causing zoom issues */
+  width: 100%;
+}
+
+.sticky-header-container {
+  position: sticky;
+  top: 0;
+  z-index: 1000;
+  background-color: #fff;
+  width: 100%;
 }
 
 code {
@@ -25,4 +29,9 @@ code {
 
 * {
   box-sizing: border-box;
+}
+
+#root {
+  width: 100%;
+  overflow-x: hidden;
 }

@@ -1,409 +1,438 @@
-/* Common styles for all info pages */
+/* Premium Footer Pages Styling - Matching Website Theme */
+
+/* Base Page Styles */
 .info-page {
   min-height: 100vh;
-  padding: 2rem 0;
-  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  padding: 3rem 0;
+  background: linear-gradient(135deg, #fafafa 0%, #ffffff 100%);
 }
 
 .info-container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 2rem;
+  width: 100%;
+  margin: 0;
+  padding: 0 4rem;
 }
 
 .info-page h1 {
-  font-size: 2.5rem;
-  color: #2c3e50;
+  font-size: 3rem;
+  font-weight: 800;
   text-align: center;
-  margin-bottom: 2rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  margin-bottom: 3rem;
+  background: linear-gradient(135deg, #1a1a1a 0%, #404040 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.5px;
 }
 
 .info-content {
-  background: white;
-  padding: 3rem;
-  border-radius: 15px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+  background: transparent;
+  padding: 2rem 0;
+  border-radius: 0;
+  box-shadow: none;
+  border: none;
   line-height: 1.8;
   color: #333;
 }
 
 .info-content h2 {
-  color: #e91e63;
-  font-size: 1.8rem;
-  margin: 2rem 0 1rem 0;
-  border-bottom: 2px solid #e91e63;
-  padding-bottom: 0.5rem;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  font-size: 2rem;
+  font-weight: 700;
+  margin: 2.5rem 0 1.5rem 0;
+  border-bottom: 3px solid rgba(214, 51, 132, 0.2);
+  padding-bottom: 0.75rem;
 }
 
 .info-content h3 {
-  color: #2c3e50;
-  font-size: 1.4rem;
-  margin: 1.5rem 0 1rem 0;
+  color: #1a1a1a;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 2rem 0 1rem 0;
 }
 
 .info-content p {
-  margin-bottom: 1.2rem;
-  font-size: 1.1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.05rem;
+  color: #444;
+  line-height: 1.9;
 }
 
-.info-content ul, .info-content ol {
-  margin: 1rem 0;
-  padding-left: 2rem;
+.info-content ul,
+.info-content ol {
+  margin: 1.5rem 0;
+  padding-left: 2.5rem;
 }
 
 .info-content li {
-  margin-bottom: 0.5rem;
-  font-size: 1.1rem;
+  margin-bottom: 0.75rem;
+  font-size: 1.05rem;
+  color: #444;
 }
 
-/* Feature grid for about page */
+.info-content strong {
+  color: #1a1a1a;
+  font-weight: 700;
+}
+
+/* Feature Grid - About Page */
 .features-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
+  gap: 2.5rem;
+  margin: 3rem 0;
 }
 
 .feature-card {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
   text-align: center;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .feature-card:hover {
-  border-color: #e91e63;
-  transform: translateY(-5px);
-  box-shadow: 0 15px 35px rgba(233, 30, 99, 0.1);
+  transform: translateY(-8px);
+  box-shadow: 0 12px 40px rgba(214, 51, 132, 0.15);
+  border-color: rgba(214, 51, 132, 0.3);
 }
 
 .feature-icon {
-  font-size: 3rem;
-  color: #e91e63;
-  margin-bottom: 1rem;
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  transition: transform 0.3s ease;
 }
 
-/* FAQ styles */
+.feature-card:hover .feature-icon {
+  transform: scale(1.1);
+}
+
+.feature-card h3 {
+  font-size: 1.3rem !important;
+  margin: 1rem 0 !important;
+  color: #1a1a1a !important;
+}
+
+/* FAQ Styles */
 .faq-item {
-  background: #f8f9fa;
-  margin: 1rem 0;
-  border-radius: 10px;
+  background: white;
+  margin: 1.5rem 0;
+  border-radius: 12px;
   overflow: hidden;
-  border: 1px solid #e9ecef;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
 }
 
 .faq-question {
-  background: #e91e63;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: white;
-  padding: 1.5rem;
+  padding: 1.75rem 2rem;
   cursor: pointer;
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-weight: 600;
-  transition: background-color 0.3s ease;
+  font-weight: 700;
+  font-size: 1.05rem;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-question:hover {
-  background: #c2185b;
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
 }
 
 .faq-answer {
-  padding: 1.5rem;
+  padding: 2rem;
   background: white;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #444;
 }
 
 .faq-toggle {
-  font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  font-size: 1.3rem;
+  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .faq-toggle.open {
   transform: rotate(180deg);
 }
 
-/* Contact form styles */
+/* Contact Form Styles */
 .contact-form {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
-  margin: 2rem 0;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 3rem;
+  border-radius: 16px;
+  margin: 3rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .form-group {
-  margin-bottom: 1.5rem;
+  margin-bottom: 2rem;
 }
 
 .form-group label {
   display: block;
-  margin-bottom: 0.5rem;
-  font-weight: 600;
-  color: #2c3e50;
+  margin-bottom: 0.75rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  font-size: 1rem;
 }
 
 .form-group input,
 .form-group textarea,
 .form-group select {
   width: 100%;
-  padding: 1rem;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  padding: 1.1rem 1.3rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   font-size: 1rem;
-  transition: border-color 0.3s ease;
+  transition: all 0.3s ease;
+  background: white;
 }
 
 .form-group input:focus,
 .form-group textarea:focus,
 .form-group select:focus {
   outline: none;
-  border-color: #e91e63;
+  border-color: #d63384;
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.1);
 }
 
 .form-group textarea {
   resize: vertical;
-  min-height: 120px;
+  min-height: 140px;
+  font-family: inherit;
 }
 
 .submit-btn {
-  background: #e91e63;
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: white;
-  padding: 1rem 2rem;
+  padding: 1.2rem 3rem;
   border: none;
-  border-radius: 8px;
-  font-size: 1.1rem;
-  font-weight: 600;
+  border-radius: 30px;
+  font-size: 1.05rem;
+  font-weight: 700;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
 }
 
 .submit-btn:hover {
-  background: #c2185b;
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
   transform: translateY(-2px);
-  box-shadow: 0 5px 15px rgba(233, 30, 99, 0.3);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.2);
 }
 
-/* Contact info grid */
+/* Contact Info Grid */
 .contact-info-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 2rem;
-  margin: 2rem 0;
+  margin: 3rem 0;
 }
 
 .contact-info-card {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
   text-align: center;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .contact-info-card:hover {
-  border-color: #e91e63;
-  transform: translateY(-3px);
+  transform: translateY(-5px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.1);
+  border-color: rgba(214, 51, 132, 0.3);
 }
 
 .contact-icon {
-  font-size: 2.5rem;
-  color: #e91e63;
-  margin-bottom: 1rem;
+  font-size: 3rem;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
 }
 
-/* Store locator styles */
-.store-search {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
-  margin: 2rem 0;
+/* Store Locator Styles */
+.store-search,
+.tracking-form {
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  margin: 3rem 0;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
 }
 
 .search-filters {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-  gap: 1rem;
-  margin-bottom: 1.5rem;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
 }
 
-.stores-grid {
+.stores-grid,
+.services-grid,
+.shipping-options {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+  gap: 2.5rem;
+  margin: 3rem 0;
 }
 
-.store-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+.store-card,
+.service-card,
+.shipping-card {
+  background: linear-gradient(135deg, #ffffff 0%, #fafafa 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-.store-card:hover {
-  border-color: #e91e63;
-  transform: translateY(-3px);
+.store-card:hover,
+.service-card:hover,
+.shipping-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.12);
+  border-color: rgba(214, 51, 132, 0.3);
 }
 
-.store-name {
-  color: #e91e63;
-  font-size: 1.3rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
-}
-
-/* Services booking styles */
-.services-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
-}
-
-.service-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
-}
-
-.service-card:hover {
-  border-color: #e91e63;
-  transform: translateY(-3px);
-}
-
+.store-name,
 .service-title {
-  color: #e91e63;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-size: 1.4rem;
-  font-weight: 600;
-  margin-bottom: 1rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
 }
 
 .service-price {
-  color: #2c3e50;
-  font-size: 1.2rem;
-  font-weight: 600;
-  margin: 1rem 0;
+  color: #1a1a1a;
+  font-size: 1.3rem;
+  font-weight: 800;
+  margin: 1.2rem 0;
 }
 
-.book-btn {
-  background: #e91e63;
+.book-btn,
+.track-btn {
+  background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 100%);
   color: white;
-  padding: 0.8rem 1.5rem;
+  padding: 1rem 2rem;
   border: none;
-  border-radius: 8px;
-  font-weight: 600;
+  border-radius: 30px;
+  font-weight: 700;
   cursor: pointer;
   transition: all 0.3s ease;
   width: 100%;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
-.book-btn:hover {
-  background: #c2185b;
+.book-btn:hover,
+.track-btn:hover {
+  background: linear-gradient(135deg, #2d2d2d 0%, #404040 100%);
   transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-/* Delivery tracking styles */
+/* Tracking Styles */
 .tracking-form {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
-  margin: 2rem 0;
   text-align: center;
 }
 
 .tracking-input {
   display: flex;
-  gap: 1rem;
-  max-width: 500px;
-  margin: 0 auto;
+  gap: 1.5rem;
+  max-width: 600px;
+  margin: 2rem auto 0;
 }
 
 .tracking-input input {
   flex: 1;
-  padding: 1rem;
-  border: 2px solid #e9ecef;
-  border-radius: 8px;
+  padding: 1.2rem 1.5rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
   font-size: 1rem;
-}
-
-.track-btn {
-  background: #e91e63;
-  color: white;
-  padding: 1rem 2rem;
-  border: none;
-  border-radius: 8px;
-  font-weight: 600;
-  cursor: pointer;
   transition: all 0.3s ease;
 }
 
-.track-btn:hover {
-  background: #c2185b;
+.tracking-input input:focus {
+  outline: none;
+  border-color: #d63384;
+  box-shadow: 0 0 0 4px rgba(214, 51, 132, 0.1);
 }
 
-/* Shipping options */
-.shipping-options {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
+/* Shipping Icon */
+.shipping-icon {
+  font-size: 3.5rem;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
 }
 
 .shipping-card {
-  background: white;
-  padding: 2rem;
-  border-radius: 10px;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
   text-align: center;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
 }
 
-.shipping-card:hover {
-  border-color: #e91e63;
-  transform: translateY(-3px);
-}
-
-.shipping-icon {
-  font-size: 3rem;
-  color: #e91e63;
-  margin-bottom: 1rem;
-}
-
-/* Sitemap styles */
+/* Sitemap Styles */
 .sitemap-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-  gap: 2rem;
-  margin: 2rem 0;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 2.5rem;
+  margin: 3rem 0;
 }
 
 .sitemap-section {
-  background: #f8f9fa;
-  padding: 2rem;
-  border-radius: 10px;
-  border: 2px solid transparent;
-  transition: all 0.3s ease;
+  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  padding: 2.5rem;
+  border-radius: 16px;
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
 }
 
 .sitemap-section:hover {
-  border-color: #e91e63;
+  border-color: rgba(214, 51, 132, 0.3);
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 .sitemap-section h3 {
-  color: #e91e63;
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
+  background: linear-gradient(135deg, #d63384 0%, #9d4edd 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  margin-bottom: 1.5rem;
+  font-size: 1.4rem;
+  font-weight: 700;
 }
 
 .sitemap-section ul {
@@ -412,33 +441,36 @@
 }
 
 .sitemap-section li {
-  margin-bottom: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
 .sitemap-section a {
-  color: #2c3e50;
+  color: #444;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: all 0.3s ease;
+  font-weight: 500;
+  display: inline-block;
 }
 
 .sitemap-section a:hover {
-  color: #e91e63;
+  color: #d63384;
+  transform: translateX(5px);
 }
 
-/* Responsive design */
+/* Responsive Design */
 @media (max-width: 768px) {
   .info-container {
-    padding: 0 1rem;
+    padding: 0 1.5rem;
   }
-  
+
   .info-content {
-    padding: 2rem 1.5rem;
+    padding: 2.5rem 2rem;
   }
-  
+
   .info-page h1 {
-    font-size: 2rem;
+    font-size: 2.2rem;
   }
-  
+
   .features-grid,
   .contact-info-grid,
   .stores-grid,
@@ -446,31 +478,45 @@
   .shipping-options,
   .sitemap-grid {
     grid-template-columns: 1fr;
+    gap: 1.5rem;
   }
-  
+
   .tracking-input {
     flex-direction: column;
   }
-  
+
   .search-filters {
     grid-template-columns: 1fr;
+  }
+
+  .contact-form {
+    padding: 2rem;
   }
 }
 
 @media (max-width: 480px) {
   .info-page h1 {
-    font-size: 1.8rem;
+    font-size: 1.9rem;
   }
-  
+
   .info-content {
-    padding: 1.5rem 1rem;
+    padding: 2rem 1.5rem;
   }
-  
+
   .info-content h2 {
-    font-size: 1.5rem;
+    font-size: 1.6rem;
   }
-  
+
   .info-content h3 {
-    font-size: 1.2rem;
+    font-size: 1.3rem;
+  }
+
+  .feature-card,
+  .contact-info-card,
+  .store-card,
+  .service-card,
+  .shipping-card,
+  .sitemap-section {
+    padding: 2rem 1.5rem;
   }
 }

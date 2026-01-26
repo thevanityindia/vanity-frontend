@@ -138,8 +138,11 @@
 }
 
 .nav-link:hover {
-    background: rgba(255, 255, 255, 0.05);
-    color: #e2e8f0;
+    background: transparent !important;
+    color: inherit !important;
+    transform: none !important;
+    box-shadow: none !important;
+    text-decoration: none !important;
 }
 
 .nav-link.active {
@@ -190,19 +193,19 @@
 
 .nav-badge.default {
     background: #334155;
-    color: white;
+    color: rgb(47, 46, 46);
 }
 
 .nav-badge.important {
     background: #ef4444;
-    color: white;
+    color: rgb(28, 26, 26);
     box-shadow: 0 2px 8px rgba(239, 68, 68, 0.3);
 }
 
 /* Orders */
 .nav-badge.warning {
     background: #f59e0b;
-    color: white;
+    color: rgb(0, 0, 0);
     box-shadow: 0 2px 8px rgba(245, 158, 11, 0.3);
 }
 
