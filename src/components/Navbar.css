@@ -1,41 +1,81 @@
 .navbar {
     background-color: #fff;
-    color: #000;
-    padding: 0 0 1rem 0;
-    border-bottom: 1px solid #eee;
+    color: #1a1a1a;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
     position: relative;
-     z-index: 900;
+    z-index: 900;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.02);
 }
 
 .nav-links {
     display: flex;
     justify-content: center;
-    gap: 1.5rem;
+    gap: 2.2rem;
+    /* Reduced gap to fit all items */
     list-style: none;
     margin: 0;
-    padding: 10px 0;
-    flex-wrap: wrap;
-    /* Allow wrapping for many items */
+    padding: 1rem 0;
+    flex-wrap: nowrap;
+    /* Prevent wrapping */
+    max-width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    white-space: nowrap;
+    overflow-x: auto;
+    /* Allow scroll on very small screens instead of breaking */
+    scrollbar-width: none;
+    /* Hide scrollbar Firefox */
+    -ms-overflow-style: none;
+    /* Hide scrollbar IE/Edge */
+}
+
+.nav-links::-webkit-scrollbar {
+    display: none;
+    /* Hide scrollbar Chrome/Safari */
 }
 
 .nav-links li {
     position: static;
+    flex-shrink: 0;
+    /* Prevent items from squishing */
 }
 
 .nav-links a {
-    color: #000;
+    color: #1a1a1a;
     text-decoration: none;
     font-weight: 700;
-    font-size: 1rem;
+    font-size: 0.8rem;
+    /* Slightly smaller to fit */
     text-transform: uppercase;
-    letter-spacing: 0.2px;
-    padding: 5px 0;
-    transition: color 0.2s ease;
+    letter-spacing: 0.5px;
+    padding: 0.5rem 0;
+    transition: color 0.3s ease;
     display: block;
+    position: relative;
+    font-family: 'Outfit', sans-serif;
+}
+
+/* Premium Underline Animation */
+.nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: 0px;
+    left: 0;
+    width: 100%;
+    height: 2px;
+    background-color: #000;
+    transform: scaleX(0);
+    transform-origin: right;
+    transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+}
+
+.nav-links a:hover::after {
+    transform: scaleX(1);
+    transform-origin: left;
 }
 
 .nav-links a:hover {
-    color: #ff0000;
+    color: #000;
 }
 
 /* Mega Menu Styles */
@@ -45,58 +85,95 @@
     left: 0;
     width: 100%;
     background: #fff;
-    border-top: 1px solid #eee;
-    border-bottom: 1px solid #eee;
-    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.05);
+    border-top: 1px solid rgba(0, 0, 0, 0.05);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.08);
     z-index: 1000;
     visibility: hidden;
     opacity: 0;
-    transition: all 0.3s ease;
-    padding: 2rem 0;
+    transform: translateY(10px);
+    transition: all 0.3s cubic-bezier(0.19, 1, 0.22, 1);
+    padding: 3rem 0;
+    display: block;
+    /* Ensure it's block so we can animate opacity */
 }
 
 .has-mega-menu:hover .mega-menu {
     visibility: visible;
     opacity: 1;
+    transform: translateY(0);
 }
 
 .mega-menu-container {
-    max-width: 1200px;
+    max-width: 1300px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* 5 columns grid */
     padding: 0 2rem;
-    gap: 2rem;
+    gap: 3rem;
 }
 
+/* Special styling if fewer columns needed, but grid is safe */
+
 .mega-menu-column {
-    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 .mega-menu-column.main-link-col {
-    flex: 0.8;
+    border-right: 1px solid #f0f0f0;
+    padding-right: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
 }
 
 .view-all-main {
-    font-size: 1.1rem !important;
+    font-size: 1.5rem !important;
     text-transform: none !important;
-    font-weight: 600 !important;
-    border: none !important;
+    font-weight: 700 !important;
+    color: #000 !important;
+    letter-spacing: -0.5px !important;
+    display: inline-flex !important;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.view-all-main::after {
+    display: none !important;
+    /* No underline for this big title link */
+}
+
+.view-all-main:hover {
+    opacity: 0.7;
 }
 
 .section-title {
-    font-size: 1rem;
+    font-size: 0.85rem;
     font-weight: 700;
-    margin-bottom: 1rem;
+    text-transform: uppercase;
+    margin-bottom: 1.2rem;
     display: flex;
     align-items: center;
     gap: 5px;
     color: #000;
+    letter-spacing: 1px;
+    border-bottom: 1px solid #000;
+    padding-bottom: 0.5rem;
+    display: inline-block;
+    width: fit-content;
 }
 
 .arrow {
-    color: #ff0000;
-    font-size: 1.2rem;
+    color: #000;
+    font-size: 1rem;
+    transition: transform 0.3s ease;
+}
+
+.view-all-main:hover .arrow,
+.section-title:hover .arrow {
+    transform: translateX(4px);
 }
 
 .mega-menu-items {
@@ -106,84 +183,92 @@
 }
 
 .mega-menu-items li {
-    margin-bottom: 0.6rem;
+    margin-bottom: 0.8rem;
 }
 
+/* Reset specific styles for mega menu links to override general nav links */
 .mega-menu-items a {
     text-transform: none !important;
     font-weight: 400 !important;
-    font-size: 0.9rem !important;
-    color: #333 !important;
-    border: none !important;
+    font-size: 0.95rem !important;
+    color: #555 !important;
     padding: 0 !important;
-    transition: color 0.2s ease !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+    font-family: 'Inter', sans-serif !important;
+    letter-spacing: 0 !important;
+    display: block !important;
+}
+
+.mega-menu-items a::after {
+    display: none !important;
+    /* Remove the underline effect from sub-items */
 }
 
 .mega-menu-items a:hover {
-    color: #ff0000 !important;
+    color: #000 !important;
+    transform: translateX(4px) !important;
+    font-weight: 500 !important;
 }
 
 .menu-icon {
     display: none;
 }
 
-
 .mobile-menu-header {
     display: none;
 }
 
-@media (max-width: 768px) {
+/* --- Mobile Styles --- */
+@media (max-width: 1024px) {
     .navbar {
-        position: relative;
         padding-bottom: 0;
         border-bottom: none;
-        /* Header has border */
-    }
-
-    .menu-icon {
-        display: block;
-        font-size: 1.5rem;
-        cursor: pointer;
-        padding: 5px;
     }
 
     .nav-links {
         display: block;
-        /* Change from flex to block for absolute positioning */
         position: fixed;
         top: 0;
         left: -100%;
-        width: 80%;
-        /* Drawer width */
-        max-width: 300px;
+        width: 100%;
+        /* Full screen drawer looks better if underneath header */
+        max-width: 100%;
         height: 100vh;
         background-color: #fff;
-        transition: left 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        z-index: 10000;
-        /* Ensure this is firmly on top of everything */
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+        transition: transform 0.4s cubic-bezier(0.19, 1, 0.22, 1);
+        z-index: 900;
+        /* Behind the Sticky Header (which is usually 1000) */
+        box-shadow: none;
         padding: 0;
-        /* Removing top padding as header handles it */
+        padding-top: 180px;
+        /* Push content down below the Header components */
         overflow-y: auto;
+        transform: translateX(0);
+        /* Used for transition logic */
+    }
+
+    .nav-links.active {
+        left: 0;
+    }
+
+    /* Overlay is less needed if we cover full screen or sit behind header properly, 
+       but let's keep it just in case */
+    .nav-links.active::before {
+        display: none;
+        /* Clean up overlay if we are going full screen white */
     }
 
     .nav-links .mobile-menu-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        padding: 15px 20px;
-        border-bottom: 1px solid #f0f0f0;
-        background: #fff;
-        position: sticky;
-        top: 0;
-        z-index: 10;
+        display: none !important;
+        /* Hide redundant close/menu bar */
     }
 
     .menu-title {
-        font-weight: 800;
-        font-size: 1.1rem;
+        font-family: 'Outfit', sans-serif;
+        font-weight: 700;
+        font-size: 1.2rem;
         text-transform: uppercase;
-        letter-spacing: 1px;
+        letter-spacing: 1.5px;
     }
 
     .close-menu-btn {
@@ -192,42 +277,54 @@
         font-size: 1.5rem;
         cursor: pointer;
         padding: 5px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
         color: #000;
-    }
-
-    .nav-links.active {
-        left: 0;
-        /* Overlay effect using shadow to prevent background dimming issues */
-        box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1), 0 0 0 100vmax rgba(0, 0, 0, 0.5);
     }
 
     .nav-links li {
         width: 100%;
-        text-align: left;
         display: block;
+        border-bottom: 1px solid #f9f9f9;
+        position: relative;
     }
 
     .nav-links a {
-        display: block;
+        display: flex;
+        align-items: center;
         width: 100%;
-        padding: 15px 25px;
-        /* Clean spacing */
-        font-size: 0.95rem;
-        border-bottom: 1px solid #f5f5f5;
-        color: #333;
+        padding: 16px 25px;
+        font-size: 1rem;
+        color: #1a1a1a;
         font-weight: 600;
-        background-color: transparent;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .nav-links a::after {
+        display: none;
+        /* No underline anim on mobile */
     }
 
     .nav-links a:hover {
-        background-color: #f9f9f9;
-        color: #000;
+        background-color: #fafafa;
     }
 
     .mega-menu {
+        position: static;
+        visibility: visible;
+        opacity: 1;
+        width: 100%;
+        box-shadow: none;
+        border: none;
+        padding: 0;
+        transform: none;
         display: none;
+        /* Hidden by default, could implement accordion */
+        background-color: #fcfcfc;
     }
+
+    /* For now, hiding mega menu content on mobile or keep simple */
+    /* Ideally, we'd have an accordion toggler. Since the JSX structure 
+       doesn't show a toggler, we rely on the logic that links are clickable.
+       If users want deep navigation on mobile, we'd need to adjust JSX to have sub-menus.
+       Given the current JSX, list items are links. */
 }

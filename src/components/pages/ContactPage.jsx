@@ -54,13 +54,13 @@ const ContactPage = () => {
                     <h1>Contact Us</h1>
                     <p className="page-subtitle">We're here to help! Get in touch with us</p>
                 </div>
-                
+
                 <div className="info-content">
                     <div className="contact-grid">
                         <div className="contact-info-section">
                             <h2>Get In Touch</h2>
                             <p>
-                                Have questions, feedback, or need assistance? We'd love to hear from you. 
+                                Have questions, feedback, or need assistance? We'd love to hear from you.
                                 Our customer service team is dedicated to providing you with the best support.
                             </p>
 
@@ -121,7 +121,7 @@ const ContactPage = () => {
                                         <FaFacebookF />
                                         <span>Facebook</span>
                                     </a>
-                                    <a href="#" className="social-link instagram">
+                                    <a href="https://www.instagram.com/thevanity_official?igsh=NDkzMWlxczFpOTJ2" target="_blank" rel="noopener noreferrer" className="social-link instagram">
                                         <FaInstagram />
                                         <span>Instagram</span>
                                     </a>
@@ -224,8 +224,8 @@ const ContactPage = () => {
                                     ></textarea>
                                 </div>
 
-                                <button 
-                                    type="submit" 
+                                <button
+                                    type="submit"
                                     className={`submit-btn ${isSubmitting ? 'submitting' : ''}`}
                                     disabled={isSubmitting}
                                 >
@@ -266,8 +266,8 @@ const ContactPage = () => {
                     <section className="content-section">
                         <h2>Frequently Asked Questions</h2>
                         <p>
-                            Before reaching out, you might find your answer in our comprehensive FAQ section. 
-                            We've compiled answers to the most common questions about orders, shipping, returns, 
+                            Before reaching out, you might find your answer in our comprehensive FAQ section.
+                            We've compiled answers to the most common questions about orders, shipping, returns,
                             and product information.
                         </p>
                         <a href="/faq" className="cta-link">View FAQ →</a>

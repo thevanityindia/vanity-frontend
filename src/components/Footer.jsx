@@ -32,7 +32,7 @@ const Footer = () => {
                     <h4>CONNECT WITH US</h4>
                     <div className="social-icons">
                         <div className="social-icon"><FaFacebookF /></div>
-                        <div className="social-icon"><FaInstagram /></div>
+                        <a href="https://www.instagram.com/thevanity_official?igsh=NDkzMWlxczFpOTJ2" target="_blank" rel="noopener noreferrer" className="social-icon"><FaInstagram /></a>
                         <div className="social-icon"><FaTwitter /></div>
                         <div className="social-icon"><FaYoutube /></div>
                     </div>

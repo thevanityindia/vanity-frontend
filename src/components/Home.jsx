@@ -32,7 +32,7 @@ const Home = ({ products }) => {
                 />
             </div>
 
-            <ProductSlider title="More" products={products.slice(20, 30)} />
+
         </>
     );
 };

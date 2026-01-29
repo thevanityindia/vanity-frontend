@@ -24,7 +24,6 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
         const handleScroll = () => {
             const scrollPos = window.scrollY;
             // High threshold to fold (200px) and very low to unfold (20px)
-            // This ensures the 100px+ height change of the header doesn't cause a loop
             setIsScrolled(prev => {
                 if (scrollPos > 200 && !prev) return true;
                 if (scrollPos < 20 && prev) return false;
@@ -106,98 +105,24 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
 
     return (
         <header className={`header ${isScrolled ? 'scrolled' : ''}`}>
-            <div className="top-bar">
-                <div className="top-bar-left">
-                    {!isAuthenticated ? (
-                        <Link to="/login" className="top-link">
-                            <FaUser /> <span>Sign In / Register</span>
-                        </Link>
-                    ) : (
-                        <div className="top-link user-menu">
-                            <Link to="/profile" style={{ color: 'inherit', textDecoration: 'none', display: 'flex', alignItems: 'center', gap: '5px' }}>
-                                <FaUser /> <span>Hi, {user?.name || user?.firstName}</span>
-                            </Link>
-                            <span className="separator">|</span>
-                            <a href="#" onClick={handleLogout} className="logout-link">
-                                <FaSignOutAlt /> Logout
-                            </a>
-                        </div>
-                    )}
-
-                </div>
-                <div className="top-bar-right">
-                    <Link to="/stores-events" className="top-link">
-                        <FaMapMarkerAlt /> <span>Stores & Events</span>
-                    </Link>
-                    <Link to="/wishlist" className="top-link" style={{ position: 'relative' }}>
-                        <FaHeart /> <span>Wishlist</span>
-                        {wishlistCount > 0 && (
-                            <span style={{
-                                position: 'absolute',
-                                top: '-8px',
-                                right: '-8px',
-                                background: '#e63946',
-                                color: '#fff',
-                                borderRadius: '50%',
-                                fontSize: '0.7rem',
-                                width: '18px',
-                                height: '18px',
-                                display: 'flex',
-                                alignItems: 'center',
-                                justifyContent: 'center',
-                                fontWeight: 'bold'
-                            }}>
-                                {wishlistCount}
-                            </span>
-                        )}
-                    </Link>
-                    <div
-                        className="top-link bag-link-container"
-                        style={{ position: 'relative' }}
-                        onMouseEnter={() => setIsMiniBagOpen(true)}
-                        onMouseLeave={() => setIsMiniBagOpen(false)}
-                    >
-                        <Link to="/bag" className="top-link bag-link">
-                            <FaShoppingBag /> <span>Bag</span>
-                            {cartCount > 0 && (
-                                <span className="bag-count-badge">
-                                    {cartCount}
-                                </span>
-                            )}
-                        </Link>
-                        <MiniBag isOpen={isMiniBagOpen} onClose={() => setIsMiniBagOpen(false)} />
-                    </div>
-                </div>
-            </div>
             <div className="header-main">
-                <div className="header-top-row">
-                    <div className="mobile-menu-trigger" onClick={toggleMenu}>
-                        {isMenuOpen ? <FaTimes /> : <FaBars />}
-                    </div>
-
-                    <Link to="/" className="logo-container">
-                        <img src={logo} alt="The Vanity Logo" className="logo-img" />
-                        <div className="logo-text">The Vanity</div>
-                    </Link>
-
-                    <div className="mobile-header-icons">
-                        <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-icon-link">
-                            <FaUser />
-                        </Link>
-                        <Link to="/bag" className="mobile-icon-link" style={{ position: 'relative' }}>
-                            <FaShoppingBag />
-                            {cartCount > 0 && (
-                                <span className="mobile-bag-count">{cartCount}</span>
-                            )}
-                        </Link>
-                    </div>
+                {/* Mobile Menu Trigger */}
+                <div className="mobile-menu-trigger" onClick={toggleMenu}>
+                    {isMenuOpen ? <FaTimes /> : <FaBars />}
                 </div>
 
+                {/* Logo Section */}
+                <Link to="/" className="logo-container">
+                    <img src={logo} alt="The Vanity Logo" className="logo-img" />
+                    <div className="logo-text">The Vanity</div>
+                </Link>
+
+                {/* Search Bar */}
                 <div className="search-bar">
                     <FaSearch className="search-icon" />
                     <input
                         type="text"
-                        placeholder="Search The Vanity"
+                        placeholder="Search for products..."
                         value={query}
                         onChange={handleSearchChange}
                     />
@@ -229,6 +154,64 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                             )}
                         </div>
                     )}
+                </div>
+
+                {/* Header Actions (User, Wishlist, Bag) */}
+                <div className="header-actions">
+                    <div className="action-item location-link">
+                        <Link to="/stores-events" className="icon-link" title="Stores & Events">
+                            <FaMapMarkerAlt />
+                        </Link>
+                    </div>
+
+                    <div className="action-item user-dropdown-container">
+                        {!isAuthenticated ? (
+                            <Link to="/login" className="icon-link">
+                                <FaUser /> <span className="action-text">Login</span>
+                            </Link>
+                        ) : (
+                            <Link to="/profile" className="icon-link">
+                                <FaUser /> <span className="action-text">Hi, {user?.firstName || 'User'}</span>
+                            </Link>
+                        )}
+                        {/* Optional: Add logout dropdown here if needed, or keep simple link */}
+                    </div>
+
+                    <div className="action-item">
+                        <Link to="/wishlist" className="icon-link" title="Wishlist">
+                            <div className="icon-wrapper">
+                                <FaHeart />
+                                {wishlistCount > 0 && <span className="badge wishlist-badge">{wishlistCount}</span>}
+                            </div>
+                            <span className="action-text">Wishlist</span>
+                        </Link>
+                    </div>
+
+                    <div
+                        className="action-item"
+                        onMouseEnter={() => setIsMiniBagOpen(true)}
+                        onMouseLeave={() => setIsMiniBagOpen(false)}
+                    >
+                        <Link to="/bag" className="icon-link" title="Bag">
+                            <div className="icon-wrapper">
+                                <FaShoppingBag />
+                                {cartCount > 0 && <span className="badge bag-badge">{cartCount}</span>}
+                            </div>
+                            <span className="action-text">Bag</span>
+                        </Link>
+                        <MiniBag isOpen={isMiniBagOpen} onClose={() => setIsMiniBagOpen(false)} />
+                    </div>
+                </div>
+
+                {/* Mobile Icons (Simplified) */}
+                <div className="mobile-header-icons">
+                    <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-icon-link">
+                        <FaUser />
+                    </Link>
+                    <Link to="/bag" className="mobile-icon-link">
+                        <FaShoppingBag />
+                        {cartCount > 0 && <span className="mobile-bag-count">{cartCount}</span>}
+                    </Link>
                 </div>
             </div>
         </header>
