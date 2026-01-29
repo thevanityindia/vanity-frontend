@@ -73,17 +73,145 @@ const InventoryManager = () => {
         }
     }, []);
 
-    // ... (applyFilters and other handlers remain the same)
+    const applyFilters = useCallback(() => {
+        let result = [...inventory];
 
-    // ... (useEffect hooks match original)
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(item =>
+                (item.productName && item.productName.toLowerCase().includes(query)) ||
+                (item.sku && item.sku.toLowerCase().includes(query)) ||
+                (item.category && item.category.toLowerCase().includes(query))
+            );
+        }
 
-    // ... (handleStockAdjustment, processStockAdjustment, exportInventory, formatters remain same)
+        if (filters.status) {
+            result = result.filter(item => item.status === filters.status);
+        }
 
-    // ... (getStockStatus, getStockPercentage remain same)
+        if (filters.category) {
+            result = result.filter(item => item.category === filters.category);
+        }
 
-    // ... (loading check)
+        if (filters.lowStock) {
+            result = result.filter(item => item.currentStock <= (item.reorderLevel || 10)); // Default threshold if not set
+        }
 
-    // ... (summary stats calc)
+        setFilteredInventory(result);
+    }, [inventory, searchQuery, filters]);
+
+    useEffect(() => {
+        loadInventory();
+    }, [loadInventory]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [applyFilters]);
+
+    const handleStockAdjustment = (item) => {
+        setSelectedItem(item);
+        setAdjustmentData({
+            type: 'add',
+            quantity: '',
+            reason: '',
+            notes: ''
+        });
+        setShowAdjustModal(true);
+    };
+
+    const processStockAdjustment = async () => {
+        if (!adjustmentData.quantity || !adjustmentData.reason) {
+            toast.error('Please fill in required fields');
+            return;
+        }
+
+        try {
+            const token = localStorage.getItem('adminToken');
+            const response = await fetch(`${API_BASE_URL}/api/admin/inventory/${selectedItem._id}`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify({
+                    type: adjustmentData.type,
+                    quantity: parseInt(adjustmentData.quantity),
+                    reason: adjustmentData.reason,
+                    notes: adjustmentData.notes,
+                    // calculate new stock for simple update or let backend handle logic
+                    currentStock: adjustmentData.type === 'set'
+                        ? parseInt(adjustmentData.quantity)
+                        : (adjustmentData.type === 'add'
+                            ? selectedItem.currentStock + parseInt(adjustmentData.quantity)
+                            : selectedItem.currentStock - parseInt(adjustmentData.quantity))
+                })
+            });
+
+            if (!response.ok) throw new Error('Failed to update stock');
+
+            toast.success('Stock updated successfully');
+            setShowAdjustModal(false);
+            loadInventory();
+        } catch (error) {
+            console.error('Error updating stock:', error);
+            toast.error('Failed to update stock');
+        }
+    };
+
+    const exportInventory = () => {
+        // Convert inventory to CSV
+        const headers = ['SKU', 'Product Name', 'Category', 'Current Stock', 'Status', 'Value'];
+        const csvContent = [
+            headers.join(','),
+            ...filteredInventory.map(item => [
+                item.sku,
+                `"${item.productName.replace(/"/g, '""')}"`,
+                item.category,
+                item.currentStock,
+                item.status,
+                item.unitCost * item.currentStock
+            ].join(','))
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `inventory-export-${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+    };
+
+    const getStockStatus = (current, min) => {
+        if (current === 0) return 'out_of_stock';
+        if (current <= min) return 'low_stock';
+        return 'in_stock';
+    };
+
+    const getStockPercentage = (current, max) => {
+        if (!max) max = 100; // Default max if not set
+        return Math.min(100, (current / max) * 100);
+    };
+
+    const formatCurrency = (amount) => {
+        return new Intl.NumberFormat('en-IN', {
+            style: 'currency',
+            currency: 'INR'
+        }).format(amount || 0);
+    };
+
+    const formatDate = (dateString) => {
+        if (!dateString) return 'Never';
+        return new Date(dateString).toLocaleDateString();
+    };
+
+    if (loading && inventory.length === 0) {
+        return <div className="loading">Loading inventory...</div>;
+    }
+
+    const totalItems = inventory.length;
+    const totalValue = inventory.reduce((acc, item) => acc + ((item.currentStock || 0) * (item.unitCost || 0)), 0);
+    const lowStockItems = inventory.filter(i => i.status === 'low_stock').length;
+    const outOfStockItems = inventory.filter(i => i.status === 'out_of_stock').length;
 
     // ... (render logic until sync button)
 

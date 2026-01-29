@@ -2,9 +2,18 @@ import React from 'react';
 import './CategoryPage.css';
 import API_BASE_URL from '../config';
 
+import { useParams } from 'react-router-dom';
 import ProductCard from './ProductCard';
 
+const formatTitle = (slug) => {
+    if (!slug) return '';
+    return slug.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+};
+
 const CategoryPage = ({ title }) => {
+    const params = useParams();
+    const effectiveTitle = title || formatTitle(params.productType || params.subcategory || params.category);
+
     const [selectedBrands, setSelectedBrands] = React.useState([]);
     const [selectedPriceRanges, setSelectedPriceRanges] = React.useState([]);
     const [sortBy, setSortBy] = React.useState('Bestsellers');
@@ -37,7 +46,7 @@ const CategoryPage = ({ title }) => {
         const fetchCategoryProducts = async () => {
             setLoading(true);
             try {
-                const res = await fetch(`${API_BASE_URL}/api/products?category=${encodeURIComponent(title)}`);
+                const res = await fetch(`${API_BASE_URL}/api/products?category=${encodeURIComponent(effectiveTitle)}`);
                 if (res.ok) {
                     const data = await res.json();
                     setBaseProducts(data.data || []);
@@ -49,7 +58,7 @@ const CategoryPage = ({ title }) => {
             }
         };
         fetchCategoryProducts();
-    }, [title]);
+    }, [effectiveTitle]);
 
     // 2. Extract unique brands for the sidebar
     const availableBrands = React.useMemo(() => {
@@ -106,7 +115,7 @@ const CategoryPage = ({ title }) => {
     return (
         <div className="category-page">
             <div className="breadcrumb">
-                <span>Home</span> / <span>{title}</span>
+                <span>Home</span> / <span>{effectiveTitle}</span>
             </div>
 
             <div className="category-container">
@@ -215,7 +224,7 @@ const CategoryPage = ({ title }) => {
 
                 <main className="category-content">
                     <div className="category-header">
-                        <h1>{title} <span>({filteredAndSortedProducts.length} items)</span></h1>
+                        <h1>{effectiveTitle} <span>({filteredAndSortedProducts.length} items)</span></h1>
                         <div className="sort-options">
                             <span>Sort:</span>
                             <select value={sortBy} onChange={(e) => setSortBy(e.target.value)}>

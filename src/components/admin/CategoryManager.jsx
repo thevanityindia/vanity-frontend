@@ -325,7 +325,11 @@ const CategoryManager = () => {
             <div className="categories-container">
                 {filteredCategories.length > 0 ? (
                     <div className="categories-tree">
-                        {renderCategoryTree(filteredCategories)}
+                        {renderCategoryTree(
+                            searchQuery
+                                ? filteredCategories
+                                : filteredCategories.filter(cat => !cat.parentId)
+                        )}
                     </div>
                 ) : (
                     <div className="empty-state">

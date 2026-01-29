@@ -9,10 +9,12 @@
 .nav-links {
     display: flex;
     justify-content: center;
-    gap: 2rem;
+    gap: 1.5rem;
     list-style: none;
     margin: 0;
     padding: 10px 0;
+    flex-wrap: wrap;
+    /* Allow wrapping for many items */
 }
 
 .nav-links li {
