@@ -1,17 +1,30 @@
 .app {
-  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  color: #000;
+  /* inherit font-family from body */
+  color: #1a1a1a;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
+  padding-top: 170px;
+  /* Space for the Fixed Header */
+}
+
+@media (max-width: 1024px) {
+  .app {
+    padding-top: 100px;
+    /* Reduced space for mobile header */
+  }
 }
 
 .sticky-header-container {
-  position: sticky;
+  position: fixed;
   top: 0;
-  z-index: 1000;
+  left: 0;
+  right: 0;
+  z-index: 1100;
   background: white;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+  /* Softer, premium shadow */
 }
 
 /* Loading spinner animation */

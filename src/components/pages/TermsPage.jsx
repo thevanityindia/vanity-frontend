@@ -1,27 +1,52 @@
 import React from 'react';
+import PageToc from '../PageToc';
+import StickyPageHeader from '../StickyPageHeader';
 import './InfoPages.css';
 
 const TermsPage = () => {
+    const tocSections = [
+        { id: 'acceptance', title: 'Acceptance of Terms' },
+        { id: 'license', title: 'Use License' },
+        { id: 'registration', title: 'Account Registration' },
+        { id: 'product-info', title: 'Product Information and Pricing' },
+        { id: 'orders-payment', title: 'Orders and Payment' },
+        { id: 'shipping', title: 'Shipping and Delivery' },
+        { id: 'returns', title: 'Returns and Exchanges' },
+        { id: 'prohibited', title: 'Prohibited Uses' },
+        { id: 'intellectual', title: 'Intellectual Property' },
+        { id: 'disclaimer', title: 'Disclaimer' },
+        { id: 'limitations', title: 'Limitations' },
+        { id: 'governing', title: 'Governing Law' },
+        { id: 'changes', title: 'Changes to Terms' },
+        { id: 'contact-info', title: 'Contact Information' }
+    ];
+
     return (
         <div className="info-page">
+            <a href="#main-content" className="skip-to-content">Skip to main content</a>
+
+            <StickyPageHeader title="Terms of Use" />
+
             <div className="info-container">
                 <div className="page-header">
                     <h1>Terms of Use</h1>
                     <p className="page-subtitle">Terms and Conditions for Using The Vanity India</p>
                     <p className="last-updated">Last Updated: January 2025</p>
                 </div>
-                
-                <div className="info-content">
-                    <section className="content-section">
+
+                <PageToc sections={tocSections} />
+
+                <div className="info-content" id="main-content">
+                    <section className="content-section" data-toc-id="acceptance">
                         <h2>Acceptance of Terms</h2>
                         <p>
                             By accessing and using The Vanity India website and services, you accept and agree to be bound 
                             by the terms and provision of this agreement. If you do not agree to abide by the above, 
                             please do not use this service.
                         </p>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="license">
                         <h2>Use License</h2>
                         <p>
                             Permission is granted to temporarily download one copy of the materials on The Vanity India's 
@@ -34,9 +59,9 @@ const TermsPage = () => {
                             <li>Attempt to reverse engineer any software contained on the website</li>
                             <li>Remove any copyright or other proprietary notations from the materials</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="registration">
                         <h2>Account Registration</h2>
                         <p>To access certain features, you must register for an account. You agree to:</p>
                         <ul>
@@ -46,9 +71,9 @@ const TermsPage = () => {
                             <li>Accept responsibility for all activities under your account</li>
                             <li>Notify us immediately of any unauthorized use</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="product-info">
                         <h2>Product Information and Pricing</h2>
                         <h3>Product Descriptions</h3>
                         <ul>
@@ -65,9 +90,9 @@ const TermsPage = () => {
                             <li>We reserve the right to correct pricing errors</li>
                             <li>Promotional offers are subject to terms and conditions</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="orders-payment">
                         <h2>Orders and Payment</h2>
                         <h3>Order Processing</h3>
                         <ul>
@@ -84,9 +109,9 @@ const TermsPage = () => {
                             <li>All transactions are processed securely</li>
                             <li>Failed payments may result in order cancellation</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="shipping">
                         <h2>Shipping and Delivery</h2>
                         <ul>
                             <li>Delivery times are estimates and not guaranteed</li>
@@ -95,9 +120,9 @@ const TermsPage = () => {
                             <li>Additional charges may apply for remote locations</li>
                             <li>Signature confirmation may be required for high-value orders</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="returns">
                         <h2>Returns and Exchanges</h2>
                         <p>Our return policy allows for:</p>
                         <ul>
@@ -107,9 +132,9 @@ const TermsPage = () => {
                             <li>Return shipping costs may apply</li>
                             <li>Refunds processed within 7-10 business days</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="prohibited">
                         <h2>Prohibited Uses</h2>
                         <p>You may not use our service:</p>
                         <ul>
@@ -120,9 +145,9 @@ const TermsPage = () => {
                             <li>To submit false or misleading information</li>
                             <li>To upload or transmit viruses or any other type of malicious code</li>
                         </ul>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="intellectual">
                         <h2>Intellectual Property</h2>
                         <p>
                             The service and its original content, features, and functionality are and will remain the 
@@ -130,9 +155,9 @@ const TermsPage = () => {
                             copyright, trademark, and other laws. Our trademarks and trade dress may not be used 
                             in connection with any product or service without our prior written consent.
                         </p>
-                    </section>
+</section>
 
-                    <section className="content-section">
+                    <section className="content-section" data-toc-id="disclaimer">
                         <h2>Disclaimer</h2>
                         <p>
                             The materials on The Vanity India's website are provided on an 'as is' basis. The Vanity India 

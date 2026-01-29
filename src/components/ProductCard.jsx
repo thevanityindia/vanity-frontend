@@ -54,7 +54,7 @@ const ProductCard = ({ product }) => {
 
     return (
         <div className="product-card" onClick={handleCardClick}>
-            <div className="product-image-container">
+            <div className={`product-image-container ${product.stock <= 0 ? 'out-of-stock' : ''}`}>
                 <img
                     src={getImageUrl(product)}
                     alt={product.name}

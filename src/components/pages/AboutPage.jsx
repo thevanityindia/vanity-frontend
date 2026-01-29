@@ -9,17 +9,17 @@ const AboutPage = () => {
                     <h1>About The Vanity India</h1>
                     <p className="page-subtitle">Your Premier Destination for Beauty & Lifestyle</p>
                 </div>
-                
+
                 <div className="info-content">
                     <section className="content-section">
                         <h2>Our Story</h2>
                         <p>
-                            Founded with a passion for beauty and self-expression, The Vanity India has been at the forefront 
-                            of bringing the latest in cosmetics, skincare, and lifestyle products to beauty enthusiasts across India. 
+                            Founded with a passion for beauty and self-expression, The Vanity India has been at the forefront
+                            of bringing the latest in cosmetics, skincare, and lifestyle products to beauty enthusiasts across India.
                             Since our inception, we have been committed to making premium beauty accessible to everyone.
                         </p>
                         <p>
-                            What started as a small venture has grown into one of India's most trusted beauty destinations, 
+                            What started as a small venture has grown into one of India's most trusted beauty destinations,
                             serving millions of customers who trust us for authentic products, expert advice, and exceptional service.
                         </p>
                     </section>
@@ -27,8 +27,8 @@ const AboutPage = () => {
                     <section className="content-section">
                         <h2>Our Mission</h2>
                         <p>
-                            To democratize beauty by making premium cosmetics, skincare, and lifestyle products accessible 
-                            to every Indian, while providing an unparalleled shopping experience that celebrates individuality 
+                            To democratize beauty by making premium cosmetics, skincare, and lifestyle products accessible
+                            to every Indian, while providing an unparalleled shopping experience that celebrates individuality
                             and self-expression.
                         </p>
                     </section>
@@ -37,27 +37,33 @@ const AboutPage = () => {
                         <h2>What We Offer</h2>
                         <div className="features-grid">
                             <div className="feature-card">
-                                <h3>🎨 Premium Makeup</h3>
+                                <div className="feature-icon">🎨</div>
+                                <h3>Premium Makeup</h3>
                                 <p>Curated collection of international and domestic makeup brands</p>
                             </div>
                             <div className="feature-card">
-                                <h3>✨ Skincare Solutions</h3>
+                                <div className="feature-icon">✨</div>
+                                <h3>Skincare Solutions</h3>
                                 <p>Expert-recommended skincare products for every skin type</p>
                             </div>
                             <div className="feature-card">
-                                <h3>💇‍♀️ Hair Care</h3>
+                                <div className="feature-icon">💇‍♀️</div>
+                                <h3>Hair Care</h3>
                                 <p>Professional hair care products and styling tools</p>
                             </div>
                             <div className="feature-card">
-                                <h3>🌸 Fragrances</h3>
+                                <div className="feature-icon">🌸</div>
+                                <h3>Fragrances</h3>
                                 <p>Exquisite collection of perfumes and body care</p>
                             </div>
                             <div className="feature-card">
-                                <h3>💎 Jewelry</h3>
+                                <div className="feature-icon">💎</div>
+                                <h3>Jewelry</h3>
                                 <p>Beautiful artificial jewelry to complement your style</p>
                             </div>
                             <div className="feature-card">
-                                <h3>🛍️ Lifestyle</h3>
+                                <div className="feature-icon">🛍️</div>
+                                <h3>Lifestyle</h3>
                                 <p>Bath & body products for complete wellness</p>
                             </div>
                         </div>
@@ -100,12 +106,12 @@ const AboutPage = () => {
                     <section className="content-section">
                         <h2>Our Commitment</h2>
                         <p>
-                            At The Vanity India, we believe that beauty is not just about looking good - it's about feeling 
-                            confident, expressing your unique personality, and embracing your authentic self. We are committed 
+                            At The Vanity India, we believe that beauty is not just about looking good - it's about feeling
+                            confident, expressing your unique personality, and embracing your authentic self. We are committed
                             to supporting your beauty journey with genuine products, expert guidance, and exceptional service.
                         </p>
                         <p>
-                            Join millions of satisfied customers who have made The Vanity India their trusted beauty partner. 
+                            Join millions of satisfied customers who have made The Vanity India their trusted beauty partner.
                             Discover your perfect look, explore new trends, and celebrate your unique beauty with us.
                         </p>
                     </section>

@@ -6,9 +6,9 @@
     background: white;
     box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
     z-index: 2001;
+    border: 1px solid #eee;
     color: #333;
     text-align: left;
-    border: 1px solid #eee;
 }
 
 .mini-bag-content {
