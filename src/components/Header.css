@@ -16,7 +16,7 @@
     align-items: center;
     font-size: 0.95rem;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow: hidden;
+    
     max-height: 100px;
     opacity: 1;
     pointer-events: auto;
