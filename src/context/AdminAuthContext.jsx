@@ -12,9 +12,49 @@ export const useAdminAuth = () => {
 };
 
 export const AdminAuthProvider = ({ children }) => {
-    // ... (state setup remains the same)
+    const [adminUser, setAdminUser] = useState(null);
+    const [isAdminAuthenticated, setIsAdminAuthenticated] = useState(false);
+    const [loading, setLoading] = useState(true);
+    const [sessionExpiry, setSessionExpiry] = useState(null);
+    const [lastActivity, setLastActivity] = useState(new Date());
 
-    // ... (other effects remain same)
+    const validateSession = useCallback(() => {
+        if (!sessionExpiry) return false;
+        return new Date() < new Date(sessionExpiry);
+    }, [sessionExpiry]);
+
+    const updateActivity = useCallback(() => {
+        setLastActivity(new Date());
+    }, []);
+
+    const adminLogout = useCallback(() => {
+        setAdminUser(null);
+        setIsAdminAuthenticated(false);
+        setSessionExpiry(null);
+        setLastActivity(new Date());
+
+        localStorage.removeItem('adminUser');
+        localStorage.removeItem('adminToken');
+        localStorage.removeItem('adminSessionExpiry');
+    }, []);
+
+    useEffect(() => {
+        const storedUser = localStorage.getItem('adminUser');
+        const storedToken = localStorage.getItem('adminToken');
+        const storedExpiry = localStorage.getItem('adminSessionExpiry');
+
+        if (storedUser && storedToken && storedExpiry) {
+            const expiryDate = new Date(storedExpiry);
+            if (new Date() < expiryDate) {
+                setAdminUser(JSON.parse(storedUser));
+                setIsAdminAuthenticated(true);
+                setSessionExpiry(expiryDate);
+            } else {
+                adminLogout();
+            }
+        }
+        setLoading(false);
+    }, [adminLogout]);
 
     const adminLogin = async (credentials) => {
         try {
@@ -67,17 +107,6 @@ export const AdminAuthProvider = ({ children }) => {
             return { success: false, message: "Network error occurred or server unavailable" };
         }
     };
-
-    const adminLogout = useCallback(() => {
-        setAdminUser(null);
-        setIsAdminAuthenticated(false);
-        setSessionExpiry(null);
-        setLastActivity(new Date());
-
-        localStorage.removeItem('adminUser');
-        localStorage.removeItem('adminToken');
-        localStorage.removeItem('adminSessionExpiry');
-    }, []);
 
     const refreshSession = useCallback(() => {
         if (isAdminAuthenticated && adminUser && validateSession()) {

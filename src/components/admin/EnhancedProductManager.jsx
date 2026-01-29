@@ -24,11 +24,47 @@ import API_BASE_URL from '../../config';
 import './EnhancedProductManager.css';
 
 const EnhancedProductManager = () => {
-    // ... (state setup remains the same)
+    const { hasPermission } = useAdminAuth();
+    const { confirm } = useConfirm();
 
-    // ... (filters setup remains the same)
+    // State
+    const [products, setProducts] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [searchQuery, setSearchQuery] = useState('');
+    const [categories, setCategories] = useState([]);
+    const [itemsPerPage, setItemsPerPage] = useState(20);
+    const [viewMode, setViewMode] = useState('table'); // 'table' or 'grid'
 
-    // ... (form state setup remains the same)
+    // Selection for bulk actions
+    const [selectedProducts, setSelectedProducts] = useState(new Set());
+
+    const [filters, setFilters] = useState({
+        category: '',
+        status: '',
+        stockLevel: ''
+    });
+
+    // Form State
+    const [showAddModal, setShowAddModal] = useState(false);
+    const [editingProduct, setEditingProduct] = useState(null);
+    const [uploadingImage, setUploadingImage] = useState(false);
+    const [formData, setFormData] = useState({
+        name: '',
+        brand: '',
+        category: '',
+        subcategory: '',
+        price: '',
+        originalPrice: '',
+        stock: '',
+        sku: '',
+        description: '',
+        shade: '',
+        extraInfo: '',
+        isPublic: true,
+        images: []
+    });
+
+    const [filteredProducts, setFilteredProducts] = useState([]);
 
     useEffect(() => {
         loadProducts();
@@ -76,7 +112,107 @@ const EnhancedProductManager = () => {
         }
     }, []);
 
-    // ... (applyFilters and other handlers remain the same)
+    const applyFilters = useCallback(() => {
+        let result = [...products];
+
+        if (searchQuery) {
+            const query = searchQuery.toLowerCase();
+            result = result.filter(p =>
+                (p.name && p.name.toLowerCase().includes(query)) ||
+                (p.brand && p.brand.toLowerCase().includes(query)) ||
+                (p.category && p.category.toLowerCase().includes(query))
+            );
+        }
+
+        if (filters.category) {
+            result = result.filter(p => p.category === filters.category);
+        }
+
+        if (filters.status) {
+            if (filters.status === 'active') result = result.filter(p => p.isPublic);
+            if (filters.status === 'draft') result = result.filter(p => !p.isPublic);
+        }
+
+        setFilteredProducts(result);
+    }, [products, searchQuery, filters]);
+
+    const handleSelectAll = (e) => {
+        if (e.target.checked) {
+            setSelectedProducts(new Set(filteredProducts.map(p => p._id)));
+        } else {
+            setSelectedProducts(new Set());
+        }
+    };
+
+    const handleSelectProduct = (id) => {
+        const newSelected = new Set(selectedProducts);
+        if (newSelected.has(id)) {
+            newSelected.delete(id);
+        } else {
+            newSelected.add(id);
+        }
+        setSelectedProducts(newSelected);
+    };
+
+    const handleOpenAddModal = () => {
+        setFormData({
+            name: '',
+            brand: '',
+            category: '',
+            subcategory: '',
+            price: '',
+            originalPrice: '',
+            stock: '',
+            sku: '',
+            description: '',
+            shade: '',
+            extraInfo: '',
+            isPublic: true,
+            images: []
+        });
+        setEditingProduct(null);
+        setShowAddModal(true);
+    };
+
+    const handleOpenEditModal = (product) => {
+        setFormData({
+            name: product.name || '',
+            brand: product.brand || '',
+            category: product.category || '',
+            subcategory: product.subcategory || '',
+            price: product.price || '',
+            originalPrice: product.originalPrice || '',
+            stock: product.stock || '',
+            sku: product.sku || '',
+            description: product.description || '',
+            shade: product.shade || '',
+            extraInfo: product.extraInfo || '',
+            isPublic: product.isPublic !== false,
+            images: product.images || []
+        });
+        setEditingProduct(product);
+        setShowAddModal(true);
+    };
+
+    const handleDownloadSample = () => {
+        // Create sample CSV content
+        const headers = ['Name', 'Brand', 'Category', 'Subcategory', 'Price', 'Original Price', 'Stock', 'SKU', 'Description', 'Shade', 'Extra Info', 'Image'];
+        const sampleRow = ['Sample Product', 'OurBrand', 'Makeup', 'Lips', '499', '699', '100', 'SKU-001', 'Description goes here', 'Red', 'Best Seller', 'http://image.url'];
+
+        const csvContent = [
+            headers.join(','),
+            sampleRow.join(',')
+        ].join('\n');
+
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'product-import-template.csv';
+        document.body.appendChild(a);
+        a.click();
+        document.body.removeChild(a);
+    };
 
     const handleDelete = async (id) => {
         if (!hasPermission('products.delete')) {

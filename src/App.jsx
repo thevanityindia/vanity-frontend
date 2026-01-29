@@ -97,6 +97,10 @@ function App() {
                       </div>
 
                       <Routes>
+                        <Route path="/:category/:subcategory/:productType" element={<CategoryPage />} />
+                        <Route path="/:category/:subcategory" element={<CategoryPage />} />
+                        <Route path="/:category" element={<CategoryPage />} />
+
                         <Route path="/" element={<Home products={products} />} />
                         <Route path="/new" element={<CategoryPage title="New Arrivals" />} />
                         <Route path="/brands" element={<CategoryPage title="Brands" />} />
