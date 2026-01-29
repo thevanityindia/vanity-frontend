@@ -3,8 +3,8 @@
     border-bottom: none;
     padding: 0;
     z-index: 1000;
-    /* Prevent layout shifting by keeping a stable container footprint */
-    contain: layout;
+    position: relative;
+    width: 100%;
 }
 
 .top-bar {
