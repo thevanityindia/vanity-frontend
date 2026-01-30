@@ -15,6 +15,7 @@ const ProductDetails = () => {
     const { id } = useParams();
     const navigate = useNavigate();
     const [quantity, setQuantity] = useState(1);
+    const [showQuantityModal, setShowQuantityModal] = useState(false);
     const { isAuthenticated } = useAuth(); // Keeping for future checks if needed
     const { addToBag, addToWishlist, removeFromWishlist, isInWishlist } = useShop();
 
@@ -25,6 +26,71 @@ const ProductDetails = () => {
 
     const [product, setProduct] = useState(null);
     const [loading, setLoading] = useState(true);
+
+    // Touch handling for swipe
+    const [touchStart, setTouchStart] = useState(0);
+    const [touchEnd, setTouchEnd] = useState(0);
+
+    const handleTouchStart = (e) => {
+        setTouchStart(e.targetTouches[0].clientX);
+    };
+
+    const handleTouchMove = (e) => {
+        setTouchEnd(e.target.touches[0].clientX);
+    };
+
+    const handleTouchEnd = () => {
+        const images = getImages();
+        if (!images || images.length === 0) return;
+
+        const swipeThreshold = 50;
+        const diff = touchStart - touchEnd;
+
+        if (Math.abs(diff) > swipeThreshold) {
+            if (diff > 0) {
+                setActiveImage((prev) => (prev + 1) % images.length);
+            } else {
+                setActiveImage((prev) => (prev - 1 + images.length) % images.length);
+            }
+        }
+    };
+
+    const getImages = () => {
+        if (!product) return [];
+        const getImageUrl = (url) => {
+            if (url && !url.startsWith('http') && !url.startsWith('data:')) {
+                return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
+            }
+            return url;
+        };
+
+        const images = product.images?.length > 0
+            ? product.images.map(img => getImageUrl(img.imageUrl))
+            : [getImageUrl(product.image) || 'https://via.placeholder.com/500?text=No+Image'];
+
+        if (images.length === 0 || !images[0]) {
+            images[0] = 'https://via.placeholder.com/500?text=No+Image';
+        }
+        return images;
+    };
+
+    // Keyboard navigation for images
+    useEffect(() => {
+        const images = getImages();
+        if (images.length === 0) return;
+
+        const handleKeyDown = (e) => {
+            if (images.length === 0) return;
+            if (e.key === 'ArrowLeft') {
+                setActiveImage((prev) => (prev - 1 + images.length) % images.length);
+            } else if (e.key === 'ArrowRight') {
+                setActiveImage((prev) => (prev + 1) % images.length);
+            }
+        };
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => window.removeEventListener('keydown', handleKeyDown);
+    }, [product]);
 
     // Fetch recommended products from API
     const [recommendedProducts, setRecommendedProducts] = useState([]);
@@ -99,6 +165,7 @@ const ProductDetails = () => {
     }
 
     const isWishlisted = isInWishlist(product.id);
+    const images = getImages();
 
     const handleAddToBag = () => {
         if (!isAuthenticated) {
@@ -128,26 +195,6 @@ const ProductDetails = () => {
     const toggleAccordion = (section) => {
         setOpenAccordion(openAccordion === section ? null : section);
     };
-
-
-
-    // Prepare images for gallery
-    const getImageUrl = (url) => {
-        if (url && !url.startsWith('http') && !url.startsWith('data:')) {
-            return `${API_BASE_URL}${url.startsWith('/') ? '' : '/'}${url}`;
-        }
-        return url;
-    };
-
-    const images = product.images?.length > 0
-        ? product.images.map(img => getImageUrl(img.imageUrl))
-        : [getImageUrl(product.image) || 'https://via.placeholder.com/500?text=No+Image'];
-
-    // Ensure we have at least one image to prevent errors
-    if (images.length === 0 || !images[0]) {
-        images[0] = 'https://via.placeholder.com/500?text=No+Image';
-    }
-
 
     const handleReviewSubmit = async (e) => {
         e.preventDefault();
@@ -205,17 +252,46 @@ const ProductDetails = () => {
                 <div className="pd-image-section">
                     <div className="pd-thumbnails">
                         {images.map((img, idx) => (
+                            <li key={idx}>
+                                <img
+                                    src={img}
+                                    className={`thumb-image ${activeImage === idx ? 'active' : ''}`}
+                                    onClick={() => setActiveImage(idx)}
+                                    alt={`Thumbnail ${idx}`}
+                                />
+                            </li>
+                        ))}
+                    </div>
+                    <div className="pd-thumbnails-mobile">
+                        {images.map((img, idx) => (
                             <img
                                 key={idx}
                                 src={img}
-                                className={`thumb-image ${activeImage === idx ? 'active' : ''}`}
+                                className={`thumb-image-mobile ${activeImage === idx ? 'active' : ''}`}
                                 onClick={() => setActiveImage(idx)}
                                 alt={`Thumbnail ${idx}`}
                             />
                         ))}
                     </div>
-                    <div className="pd-main-image">
+                    <div
+                        className="pd-main-image"
+                        onClick={() => {
+                            setActiveImage((prev) => (prev + 1) % images.length);
+                        }}
+                        onTouchStart={handleTouchStart}
+                        onTouchMove={handleTouchMove}
+                        onTouchEnd={handleTouchEnd}
+                    >
                         <img src={images[activeImage]} alt={product.name} />
+                    </div>
+                    <div className="pd-image-dots">
+                        {images.map((_, idx) => (
+                            <div
+                                key={idx}
+                                className={`pd-image-dot ${activeImage === idx ? 'active' : ''}`}
+                                onClick={() => setActiveImage(idx)}
+                            />
+                        ))}
                     </div>
                 </div>
 
@@ -250,13 +326,30 @@ const ProductDetails = () => {
                                     onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
                                 >-</button>
                                 <input
-                                    type="number"
-                                    min="1"
+                                    type="text"
+                                    inputMode="numeric"
+                                    pattern="[0-9]*"
                                     value={quantity}
                                     onChange={(e) => {
-                                        const val = parseInt(e.target.value);
-                                        if (!isNaN(val) && val >= 1) setQuantity(val);
+                                        const val = e.target.value;
+                                        // Allow empty string for editing
+                                        if (val === '') {
+                                            setQuantity('');
+                                        } else if (/^\d+$/.test(val)) {
+                                            // Only accept positive integers
+                                            const num = parseInt(val);
+                                            if (num >= 1 && num <= 999) {
+                                                setQuantity(num);
+                                            }
+                                        }
                                     }}
+                                    onBlur={(e) => {
+                                        // On blur, ensure we have a valid number
+                                        if (e.target.value === '' || parseInt(e.target.value) < 1) {
+                                            setQuantity(1);
+                                        }
+                                    }}
+                                    onFocus={(e) => e.target.select()}
                                     className="qty-input"
                                 />
                                 <button
@@ -395,6 +488,116 @@ const ProductDetails = () => {
                     </div>
                 </div>
             </div>
+
+            {/* Mobile Sticky Bottom Bar */}
+            <div className="pd-mobile-sticky-bar">
+                <div className="pd-mobile-bar-content">
+                    <div className="pd-mobile-price-qty">
+                        <div className="pd-mobile-price">
+                            <span className="pd-mobile-current">₹{product.price}</span>
+                            {product.originalPrice && (
+                                <span className="pd-mobile-original">₹{product.originalPrice}</span>
+                            )}
+                        </div>
+                        <div className="pd-mobile-quantity-selector">
+                            <button
+                                className="pd-mobile-qty-btn"
+                                onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                            >-</button>
+                            <input
+                                type="text"
+                                inputMode="numeric"
+                                pattern="[0-9]*"
+                                value={quantity}
+                                onChange={(e) => {
+                                    const val = e.target.value;
+                                    // Allow empty string for editing
+                                    if (val === '') {
+                                        setQuantity('');
+                                    } else if (/^\d+$/.test(val)) {
+                                        // Only accept positive integers
+                                        const num = parseInt(val);
+                                        if (num >= 1 && num <= 999) {
+                                            setQuantity(num);
+                                        }
+                                    }
+                                }}
+                                onBlur={(e) => {
+                                    // On blur, ensure we have a valid number
+                                    if (e.target.value === '' || parseInt(e.target.value) < 1) {
+                                        setQuantity(1);
+                                    }
+                                }}
+                                onFocus={(e) => e.target.select()}
+                                className="pd-mobile-qty-input"
+                            />
+                            <button
+                                className="pd-mobile-qty-btn"
+                                onClick={() => setQuantity(prev => prev + 1)}
+                            >+</button>
+                        </div>
+                    </div>
+                    <div className="pd-mobile-actions">
+                        <button className="pd-mobile-wishlist" onClick={handleWishlist}>
+                            {isWishlisted ? <FaHeart color="#e63946" /> : <FaRegHeart />}
+                        </button>
+                        {product.stock <= 0 ? (
+                            <button className="pd-mobile-add disabled" disabled>
+                                Out of Stock
+                            </button>
+                        ) : (
+                            <button className="pd-mobile-add" onClick={handleAddToBag}>
+                                ADD
+                            </button>
+                        )}
+                    </div>
+                </div>
+            </div>
+
+            {/* Quantity Selection Modal */}
+            {showQuantityModal && (
+                <div className="pd-modal-overlay" onClick={() => setShowQuantityModal(false)}>
+                    <div className="pd-modal-content" onClick={(e) => e.stopPropagation()}>
+                        <div className="pd-modal-header">
+                            <h3>Select Quantity</h3>
+                            <button
+                                className="pd-modal-close"
+                                onClick={() => setShowQuantityModal(false)}
+                            >
+                                ✕
+                            </button>
+                        </div>
+                        <div className="pd-modal-body">
+                            <div className="pd-modal-quantity-grid">
+                                {[1, 2, 3, 4, 5, 6, 7, 8, 9, 10].map((qty) => (
+                                    <button
+                                        key={qty}
+                                        className={`pd-qty-option ${quantity === qty ? 'active' : ''}`}
+                                        onClick={() => {
+                                            setQuantity(qty);
+                                            setShowQuantityModal(false);
+                                        }}
+                                    >
+                                        {qty}
+                                    </button>
+                                ))}
+                            </div>
+                            <div className="pd-modal-total">
+                                Total: ₹{(product.price * quantity).toLocaleString()}
+                            </div>
+                        </div>
+                        <button
+                            className="pd-modal-confirm"
+                            onClick={() => {
+                                setShowQuantityModal(false);
+                                handleAddToBag();
+                            }}
+                        >
+                            Add to Bag ({quantity} item{quantity > 1 ? 's' : ''})
+                        </button>
+                    </div>
+                </div>
+            )}
 
             {/* Recommended Products */}
             {recommendedProducts.length > 0 && (

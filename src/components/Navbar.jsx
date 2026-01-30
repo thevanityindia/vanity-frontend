@@ -364,7 +364,8 @@ const Navbar = ({ isOpen, closeMenu }) => {
                     ]
                 }
             ]
-        }
+        },
+
     ];
 
     return (
