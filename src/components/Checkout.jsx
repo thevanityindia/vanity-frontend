@@ -10,6 +10,7 @@ import './Checkout.css'; // We'll create this or reuse basic styles
 const Checkout = () => {
     const { isAuthenticated } = useAuth();
     const { cartItems, fetchShopData } = useShop();
+
     const navigate = useNavigate();
     const [savedAddresses, setSavedAddresses] = useState([]);
     const [paymentMethod, setPaymentMethod] = useState('cod');

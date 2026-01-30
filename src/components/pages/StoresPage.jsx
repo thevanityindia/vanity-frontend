@@ -12,6 +12,7 @@ const StoresPage = () => {
             name: "The Vanity India - Vasai",
             address: "Office no 120, 1st Floor, Hilton Arcade, Opp-Tanish NX Salon, Evershine, Vasai East - 401208",
             phone: "+91 9112233165",
+            mapLink: "https://maps.google.com/?q=Office no 120, 1st Floor, Hilton Arcade, Opp-Tanish NX Salon, Evershine, Vasai East - 401208",
             city: "Vasai",
             timings: "10:00 AM - 9:00 PM",
             services: ["Beauty Consultation", "Makeup Trial", "Skin Analysis", "Product Demo"],
@@ -112,11 +113,17 @@ const StoresPage = () => {
                                     </div>
 
                                     <div className="store-actions">
-                                        <button className="action-btn primary">
+                                        <button
+                                            className="action-btn primary"
+                                            onClick={() => window.open(store.mapLink, '_blank')}
+                                        >
                                             <FiNavigation />
                                             Get Directions
                                         </button>
-                                        <button className="action-btn secondary">
+                                        <button
+                                            className="action-btn secondary"
+                                            onClick={() => window.location.href = `tel:${store.phone.replace(/\s+/g, '')}`}
+                                        >
                                             <FiPhone />
                                             Call Store
                                         </button>

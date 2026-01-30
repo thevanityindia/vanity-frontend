@@ -169,7 +169,7 @@ const FAQPage = () => {
                         <div className="contact-options">
                             <div className="contact-option">
                                 <h3>📞 Call Us</h3>
-                                <p>+91-1800-123-4567</p>
+                                <p>+91 9112233165</p>
                                 <p>Mon-Sat: 9 AM - 9 PM</p>
                             </div>
                             <div className="contact-option">
