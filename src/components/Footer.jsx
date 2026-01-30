@@ -14,8 +14,7 @@ const Footer = () => {
                         <li><Link to="/blogs">The Vanity Blog</Link></li>
                         <li><Link to="/privacy">Privacy Policy</Link></li>
                         <li><Link to="/terms">Terms of Use</Link></li>
-                        <li><Link to="/sitemap">Sitemap</Link></li>
-                        <li><Link to="/international">International</Link></li>
+
                     </ul>
                 </div>
                 <div className="footer-column">

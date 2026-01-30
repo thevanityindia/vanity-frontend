@@ -3,7 +3,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useShop } from '../context/ShopContext';
 import ProductCard from './ProductCard'; // Reuse ProductCard
-import './InfoPage.css';
+import './Wishlist.css'; // Import dedicated CSS
 
 const Wishlist = () => {
     const { isAuthenticated } = useAuth();
@@ -11,22 +11,12 @@ const Wishlist = () => {
 
     if (!isAuthenticated) {
         return (
-            <div className="info-page">
-                <div className="info-container">
-                    <h1>My Wishlist</h1>
-                    <div className="info-content" style={{ textAlign: 'center', padding: '3rem 0' }}>
-                        <p>Please sign in to view your wishlist.</p>
-                        <div style={{ marginTop: '2rem' }}>
-                            <Link to="/login" style={{
-                                background: '#000',
-                                color: '#fff',
-                                padding: '10px 20px',
-                                textDecoration: 'none',
-                                fontWeight: 'bold',
-                                textTransform: 'uppercase',
-                                borderRadius: '4px'
-                            }}>Sign In</Link>
-                        </div>
+            <div className="wishlist-page-wrapper">
+                <div className="auth-message-wrapper">
+                    <div className="auth-message-box">
+                        <h1>My Wishlist</h1>
+                        <p style={{ marginBottom: '30px', color: '#666' }}>Please sign in to view and manage your wishlist.</p>
+                        <Link to="/login" className="wishlist-btn-primary">Sign In</Link>
                     </div>
                 </div>
             </div>
@@ -34,17 +24,21 @@ const Wishlist = () => {
     }
 
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <h1>My Wishlist ({wishlistItems.length})</h1>
+        <div className="wishlist-page-wrapper">
+            <div className="wishlist-container">
+                <div className="wishlist-header">
+                    <h1 className="wishlist-title">My Wishlist</h1>
+                    <span className="wishlist-count">{wishlistItems.length} Items</span>
+                </div>
 
                 {wishlistItems.length === 0 ? (
-                    <div className="info-content" style={{ textAlign: 'center', padding: '3rem 0' }}>
-                        <p>Your wishlist is currently empty.</p>
-                        <Link to="/" style={{ textDecoration: 'underline', fontWeight: 'bold' }}>Continue Shopping</Link>
+                    <div className="wishlist-empty-state">
+                        <h2 className="wishlist-empty-title">Your wishlist is empty</h2>
+                        <p className="wishlist-empty-text">Save items you love to buy later!</p>
+                        <Link to="/" className="wishlist-btn-primary">Start Shopping</Link>
                     </div>
                 ) : (
-                    <div className="product-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px', marginTop: '30px' }}>
+                    <div className="wishlist-grid">
                         {wishlistItems.map(product => (
                             <ProductCard key={product.id} product={product} />
                         ))}

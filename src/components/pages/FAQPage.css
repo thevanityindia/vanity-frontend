@@ -1,0 +1,232 @@
+/* FAQ Page Specific Styles */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.faq-page-wrapper {
+    background-color: #ffffff;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+    /* Top padding to clear fixed header */
+    font-family: 'Inter', sans-serif;
+    color: #111;
+    width: 100%;
+}
+
+.faq-container {
+    width: 100%;
+    max-width: 1400px;
+    /* Allow it to go wide */
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Header Section */
+.faq-header {
+    text-align: left;
+    margin-bottom: 60px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.faq-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.faq-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+/* Search Section */
+.faq-search-section {
+    width: 100%;
+    margin-bottom: 60px;
+}
+
+.faq-search-input {
+    width: 100%;
+    padding: 1.25rem 2rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 100px;
+    font-family: 'Inter', sans-serif;
+    font-size: 1rem;
+    background: #fafafa;
+    transition: all 0.3s;
+    text-align: left;
+}
+
+.faq-search-input:focus {
+    outline: none;
+    background: #fff;
+    border-color: #000;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+}
+
+/* FAQ Content Area */
+.faq-content {
+    width: 100%;
+}
+
+.faq-category {
+    margin-bottom: 60px;
+}
+
+.category-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.75rem;
+    font-weight: 500;
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 2px solid #000;
+    display: inline-block;
+    text-align: left;
+}
+
+.faq-list {
+    display: grid;
+    gap: 0;
+    /* Items are bottom bordered */
+}
+
+.faq-item {
+    border-bottom: 1px solid #f0f0f0;
+    margin-bottom: 0;
+    transition: background-color 0.2s;
+}
+
+.faq-item:hover {
+    background-color: #fafafa;
+}
+
+.faq-question {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 24px 20px 24px 0;
+    /* Padding mostly right for arrow */
+    cursor: pointer;
+    font-family: 'Outfit', sans-serif;
+    font-weight: 500;
+    font-size: 1.2rem;
+    background: none;
+    border: none;
+    width: 100%;
+    text-align: left;
+    transition: color 0.2s ease;
+    color: #111;
+}
+
+.faq-question:hover,
+.faq-question.active {
+    color: #555;
+}
+
+.faq-answer {
+    padding-bottom: 24px;
+    color: #555;
+    line-height: 1.7;
+    padding-right: 20px;
+    animation: slideDown 0.3s ease-out;
+    text-align: left;
+    font-size: 1.05rem;
+}
+
+@keyframes slideDown {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Contact/Help Section */
+.faq-help-section {
+    margin-top: 80px;
+    padding-top: 60px;
+    border-top: 1px solid #eee;
+    text-align: left;
+}
+
+.faq-help-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    margin-bottom: 20px;
+}
+
+.contact-options {
+    display: flex;
+    justify-content: flex-start;
+    /* Left aligned */
+    gap: 60px;
+    margin-top: 40px;
+    flex-wrap: wrap;
+    /* Wrap on small screens if needed */
+}
+
+.contact-option {
+    text-align: left;
+    background: #f9f9f9;
+    padding: 30px;
+    border-radius: 8px;
+    min-width: 250px;
+    border: 1px solid #eee;
+}
+
+.contact-option h3 {
+    font-size: 1.2rem;
+    margin-bottom: 15px;
+    font-family: 'Outfit', sans-serif;
+}
+
+.contact-option p {
+    color: #666;
+    margin-bottom: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .faq-page-wrapper {
+        padding-top: 100px;
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .faq-container {
+        padding: 0;
+    }
+
+    .faq-header {
+        margin-bottom: 40px;
+    }
+
+    .faq-title {
+        font-size: 2.2rem;
+    }
+
+    .faq-question {
+        font-size: 1.1rem;
+        padding-right: 0;
+    }
+
+    .contact-options {
+        flex-direction: column;
+        /* Stack vertically on mobile */
+        gap: 20px;
+    }
+
+    .contact-option {
+        width: 100%;
+    }
+}

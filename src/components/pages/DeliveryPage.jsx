@@ -1,17 +1,17 @@
 import React from 'react';
 import { FiTruck, FiClock, FiMapPin, FiPackage, FiShield } from 'react-icons/fi';
-import './InfoPages.css';
+import './DeliveryPage.css';
 
 const DeliveryPage = () => {
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
+        <div className="delivery-page">
+            <div className="delivery-container">
+                <div className="delivery-header">
                     <h1>Shipping & Delivery</h1>
                     <p className="page-subtitle">Fast, reliable delivery across India</p>
                 </div>
-                
-                <div className="info-content">
+
+                <div className="delivery-content">
                     <section className="content-section">
                         <h2>Delivery Options</h2>
                         <div className="delivery-options">
@@ -213,12 +213,12 @@ const DeliveryPage = () => {
                     <section className="content-section">
                         <h2>Need Help?</h2>
                         <p>
-                            If you have questions about your delivery or need to make special arrangements, 
+                            If you have questions about your delivery or need to make special arrangements,
                             our customer service team is here to help.
                         </p>
                         <div className="help-contact">
                             <div className="help-option">
-                                <strong>📞 Call:</strong> +91-1800-123-4567
+                                <strong>📞 Call:</strong> +91 9112233165
                             </div>
                             <div className="help-option">
                                 <strong>✉️ Email:</strong> delivery@thevanityindia.com

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiMapPin, FiPhone, FiClock, FiNavigation, FiSearch } from 'react-icons/fi';
-import './InfoPages.css';
+import './StoresPage.css';
 
 const StoresPage = () => {
     const [selectedCity, setSelectedCity] = useState('all');
@@ -9,85 +9,35 @@ const StoresPage = () => {
     const stores = [
         {
             id: 1,
-            name: "The Vanity India - Bandra",
-            address: "Shop 15, Linking Road, Bandra West, Mumbai, Maharashtra 400050",
-            phone: "+91-22-2640-1234",
-            city: "Mumbai",
-            timings: "10:00 AM - 10:00 PM",
-            services: ["Beauty Consultation", "Makeup Trial", "Skin Analysis", "Product Demo"],
-            features: ["Air Conditioned", "Wheelchair Accessible", "Parking Available"]
-        },
-        {
-            id: 2,
-            name: "The Vanity India - Connaught Place",
-            address: "Block A, Inner Circle, Connaught Place, New Delhi 110001",
-            phone: "+91-11-2341-5678",
-            city: "Delhi",
-            timings: "10:00 AM - 9:30 PM",
-            services: ["Beauty Consultation", "Hair Styling", "Makeup Trial", "Bridal Consultation"],
-            features: ["Air Conditioned", "Metro Connectivity", "Valet Parking"]
-        },
-        {
-            id: 3,
-            name: "The Vanity India - Brigade Road",
-            address: "123 Brigade Road, Bangalore, Karnataka 560025",
-            phone: "+91-80-2559-9876",
-            city: "Bangalore",
-            timings: "10:30 AM - 9:30 PM",
-            services: ["Beauty Consultation", "Skin Analysis", "Product Demo", "Personal Shopping"],
-            features: ["Air Conditioned", "Wheelchair Accessible", "Free WiFi"]
-        },
-        {
-            id: 4,
-            name: "The Vanity India - Express Avenue",
-            address: "Express Avenue Mall, Royapettah, Chennai, Tamil Nadu 600014",
-            phone: "+91-44-2857-3456",
-            city: "Chennai",
-            timings: "10:00 AM - 10:00 PM",
-            services: ["Beauty Consultation", "Makeup Trial", "Skin Analysis"],
-            features: ["Mall Location", "Food Court Nearby", "Ample Parking"]
-        },
-        {
-            id: 5,
-            name: "The Vanity India - Park Street",
-            address: "45 Park Street, Kolkata, West Bengal 700016",
-            phone: "+91-33-2229-8765",
-            city: "Kolkata",
+            name: "The Vanity India - Vasai",
+            address: "Office no 120, 1st Floor, Hilton Arcade, Opp-Tanish NX Salon, Evershine, Vasai East - 401208",
+            phone: "+91 9112233165",
+            city: "Vasai",
             timings: "10:00 AM - 9:00 PM",
-            services: ["Beauty Consultation", "Product Demo", "Skin Analysis"],
-            features: ["Heritage Location", "Metro Connectivity", "Street Parking"]
-        },
-        {
-            id: 6,
-            name: "The Vanity India - Banjara Hills",
-            address: "Road No. 12, Banjara Hills, Hyderabad, Telangana 500034",
-            phone: "+91-40-2335-4567",
-            city: "Hyderabad",
-            timings: "10:30 AM - 9:30 PM",
-            services: ["Beauty Consultation", "Makeup Trial", "Personal Shopping"],
-            features: ["Air Conditioned", "Valet Parking", "Premium Location"]
+            services: ["Beauty Consultation", "Makeup Trial", "Skin Analysis", "Product Demo"],
+            features: ["Air Conditioned", "Parking Available", "Expert Consultation"]
         }
     ];
 
-    const cities = ['all', ...new Set(stores.map(store => store.city))];
+    const cities = ['all', 'Vasai'];
 
     const filteredStores = stores.filter(store => {
         const matchesCity = selectedCity === 'all' || store.city === selectedCity;
         const matchesSearch = store.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            store.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                            store.city.toLowerCase().includes(searchQuery.toLowerCase());
+            store.address.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            store.city.toLowerCase().includes(searchQuery.toLowerCase());
         return matchesCity && matchesSearch;
     });
 
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
+        <div className="stores-page">
+            <div className="stores-container">
+                <div className="stores-header">
                     <h1>Find a Store</h1>
                     <p className="page-subtitle">Visit our stores for personalized beauty consultations and product trials</p>
                 </div>
-                
-                <div className="info-content">
+
+                <div className="stores-content">
                     <section className="content-section">
                         <div className="store-filters">
                             <div className="filter-group">
@@ -125,18 +75,18 @@ const StoresPage = () => {
                                         <h3>{store.name}</h3>
                                         <span className="city-badge">{store.city}</span>
                                     </div>
-                                    
+
                                     <div className="store-info">
                                         <div className="info-item">
                                             <FiMapPin className="info-icon" />
                                             <p>{store.address}</p>
                                         </div>
-                                        
+
                                         <div className="info-item">
                                             <FiPhone className="info-icon" />
                                             <p>{store.phone}</p>
                                         </div>
-                                        
+
                                         <div className="info-item">
                                             <FiClock className="info-icon" />
                                             <p>{store.timings}</p>
@@ -195,7 +145,7 @@ const StoresPage = () => {
                                     <li>Routine planning</li>
                                 </ul>
                             </div>
-                            
+
                             <div className="service-card">
                                 <h3>✨ Makeup Trial</h3>
                                 <p>Try before you buy with our complimentary makeup trials</p>
@@ -206,7 +156,7 @@ const StoresPage = () => {
                                     <li>Application techniques</li>
                                 </ul>
                             </div>
-                            
+
                             <div className="service-card">
                                 <h3>🔬 Skin Analysis</h3>
                                 <p>Advanced skin analysis using professional tools</p>
@@ -217,7 +167,7 @@ const StoresPage = () => {
                                     <li>Progress tracking</li>
                                 </ul>
                             </div>
-                            
+
                             <div className="service-card">
                                 <h3>👰 Bridal Consultation</h3>
                                 <p>Special bridal beauty packages and consultations</p>
@@ -234,7 +184,7 @@ const StoresPage = () => {
                     <section className="content-section">
                         <h2>Book an Appointment</h2>
                         <p>
-                            Want to ensure personalized attention? Book an appointment with our beauty experts 
+                            Want to ensure personalized attention? Book an appointment with our beauty experts
                             for a dedicated consultation session.
                         </p>
                         <div className="appointment-info">

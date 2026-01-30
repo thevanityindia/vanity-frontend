@@ -1,6 +1,6 @@
 import React from 'react';
 import { FiStar, FiClock, FiUsers, FiAward } from 'react-icons/fi';
-import './InfoPages.css';
+import './ServicesPage.css'; // Import dedicated CSS
 
 const ServicesPage = () => {
     const services = [
@@ -97,32 +97,32 @@ const ServicesPage = () => {
     ];
 
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
-                    <h1>Beauty Services</h1>
-                    <p className="page-subtitle">Professional beauty services by certified experts</p>
+        <div className="services-page-wrapper">
+            <div className="services-container">
+                <div className="services-header">
+                    <h1 className="services-title">Beauty Services</h1>
+                    <p className="services-subtitle">Professional beauty services by certified experts</p>
                 </div>
-                
-                <div className="info-content">
-                    <section className="content-section">
+
+                <div className="services-content">
+                    <section className="services-content-section">
                         <h2>Our Services</h2>
-                        <div className="services-grid">
+                        <div className="services-list-grid">
                             {services.map(service => (
-                                <div key={service.id} className="service-card">
-                                    <div className="service-header">
+                                <div key={service.id} className="service-item-card">
+                                    <div className="service-item-header">
                                         <h3>{service.name}</h3>
-                                        <div className="service-meta">
-                                            <span className="duration">
+                                        <div className="service-item-meta">
+                                            <span className="service-duration">
                                                 <FiClock /> {service.duration}
                                             </span>
-                                            <span className="price">{service.price}</span>
+                                            <span className="service-price">{service.price}</span>
                                         </div>
                                     </div>
-                                    
-                                    <p className="service-description">{service.description}</p>
-                                    
-                                    <div className="service-includes">
+
+                                    <p className="service-desc">{service.description}</p>
+
+                                    <div className="service-includes-box">
                                         <h4>What's Included:</h4>
                                         <ul>
                                             {service.includes.map((item, index) => (
@@ -130,47 +130,47 @@ const ServicesPage = () => {
                                             ))}
                                         </ul>
                                     </div>
-                                    
-                                    <button className="book-service-btn">Book Now</button>
+
+                                    <button className="service-book-btn">Book Now</button>
                                 </div>
                             ))}
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>Why Choose Our Services?</h2>
-                        <div className="features-grid">
-                            <div className="feature-card">
-                                <FiAward className="feature-icon" />
+                        <div className="features-list-grid">
+                            <div className="feature-item-card">
+                                <FiAward className="feature-icon-large" />
                                 <h3>Certified Professionals</h3>
                                 <p>Our beauty experts are certified and trained in the latest techniques and trends</p>
                             </div>
-                            <div className="feature-card">
-                                <FiStar className="feature-icon" />
+                            <div className="feature-item-card">
+                                <FiStar className="feature-icon-large" />
                                 <h3>Premium Products</h3>
                                 <p>We use only authentic, high-quality products from renowned international brands</p>
                             </div>
-                            <div className="feature-card">
-                                <FiUsers className="feature-icon" />
+                            <div className="feature-item-card">
+                                <FiUsers className="feature-icon-large" />
                                 <h3>Personalized Approach</h3>
                                 <p>Every service is tailored to your unique needs, preferences, and skin type</p>
                             </div>
-                            <div className="feature-card">
-                                <FiClock className="feature-icon" />
+                            <div className="feature-item-card">
+                                <FiClock className="feature-icon-large" />
                                 <h3>Flexible Scheduling</h3>
                                 <p>Book appointments at your convenience with our flexible scheduling options</p>
                             </div>
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>Service Packages</h2>
-                        <div className="packages-grid">
-                            <div className="package-card">
+                        <div className="packages-list-grid">
+                            <div className="package-item-card">
                                 <h3>Bridal Beauty Package</h3>
-                                <div className="package-price">₹8,999</div>
-                                <div className="package-savings">Save ₹2,000</div>
-                                <ul className="package-includes">
+                                <div className="package-cost">₹8,999</div>
+                                <div className="package-save">Save ₹2,000</div>
+                                <ul className="package-details-list">
                                     <li>Bridal makeup trial</li>
                                     <li>Wedding day makeup</li>
                                     <li>Hair styling</li>
@@ -178,15 +178,15 @@ const ServicesPage = () => {
                                     <li>Touch-up kit</li>
                                     <li>Photography session</li>
                                 </ul>
-                                <button className="package-btn">Choose Package</button>
+                                <button className="package-action-btn">Choose Package</button>
                             </div>
-                            
-                            <div className="package-card popular">
-                                <div className="popular-badge">Most Popular</div>
-                                <h3>Complete Makeover</h3>
-                                <div className="package-price">₹4,999</div>
-                                <div className="package-savings">Save ₹1,500</div>
-                                <ul className="package-includes">
+
+                            <div className="package-item-card popular">
+                                <div className="package-badge">Most Popular</div>
+                                <h3 className="package-title">Complete Makeover</h3>
+                                <div className="package-cost">₹4,999</div>
+                                <div className="package-save">Save ₹1,500</div>
+                                <ul className="package-details-list">
                                     <li>Skin analysis</li>
                                     <li>Personal consultation</li>
                                     <li>Professional makeup</li>
@@ -194,55 +194,55 @@ const ServicesPage = () => {
                                     <li>Product recommendations</li>
                                     <li>Follow-up consultation</li>
                                 </ul>
-                                <button className="package-btn">Choose Package</button>
+                                <button className="package-action-btn">Choose Package</button>
                             </div>
-                            
-                            <div className="package-card">
+
+                            <div className="package-item-card">
                                 <h3>Beauty Basics</h3>
-                                <div className="package-price">₹1,999</div>
-                                <div className="package-savings">Save ₹500</div>
-                                <ul className="package-includes">
+                                <div className="package-cost">₹1,999</div>
+                                <div className="package-save">Save ₹500</div>
+                                <ul className="package-details-list">
                                     <li>Personal consultation</li>
                                     <li>Skin analysis</li>
                                     <li>Product recommendations</li>
                                     <li>Basic makeup tutorial</li>
                                     <li>Sample kit</li>
                                 </ul>
-                                <button className="package-btn">Choose Package</button>
+                                <button className="package-action-btn">Choose Package</button>
                             </div>
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>How to Book</h2>
-                        <div className="booking-steps">
-                            <div className="booking-step">
-                                <div className="step-number">1</div>
+                        <div className="service-steps-grid">
+                            <div className="service-step-item">
+                                <div className="step-circle">1</div>
                                 <h3>Choose Your Service</h3>
                                 <p>Select the service or package that best fits your needs</p>
                             </div>
-                            <div className="booking-step">
-                                <div className="step-number">2</div>
+                            <div className="service-step-item">
+                                <div className="step-circle">2</div>
                                 <h3>Select Date & Time</h3>
                                 <p>Pick a convenient date and time slot from our available options</p>
                             </div>
-                            <div className="booking-step">
-                                <div className="step-number">3</div>
+                            <div className="service-step-item">
+                                <div className="step-circle">3</div>
                                 <h3>Confirm Booking</h3>
                                 <p>Provide your details and confirm your appointment</p>
                             </div>
-                            <div className="booking-step">
-                                <div className="step-number">4</div>
+                            <div className="service-step-item">
+                                <div className="step-circle">4</div>
                                 <h3>Enjoy Your Service</h3>
                                 <p>Visit our store and enjoy your personalized beauty service</p>
                             </div>
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>Service Policies</h2>
-                        <div className="policies-grid">
-                            <div className="policy-card">
+                        <div className="policies-list-grid">
+                            <div className="policy-item-box">
                                 <h3>📅 Booking & Cancellation</h3>
                                 <ul>
                                     <li>Book at least 24 hours in advance</li>
@@ -251,8 +251,8 @@ const ServicesPage = () => {
                                     <li>No-show charges may apply</li>
                                 </ul>
                             </div>
-                            
-                            <div className="policy-card">
+
+                            <div className="policy-item-box">
                                 <h3>💳 Payment & Pricing</h3>
                                 <ul>
                                     <li>Payment required at time of service</li>
@@ -261,8 +261,8 @@ const ServicesPage = () => {
                                     <li>Member discounts available</li>
                                 </ul>
                             </div>
-                            
-                            <div className="policy-card">
+
+                            <div className="policy-item-box">
                                 <h3>🛡️ Health & Safety</h3>
                                 <ul>
                                     <li>All tools sanitized between clients</li>
@@ -271,8 +271,8 @@ const ServicesPage = () => {
                                     <li>COVID-19 safety protocols followed</li>
                                 </ul>
                             </div>
-                            
-                            <div className="policy-card">
+
+                            <div className="policy-item-box">
                                 <h3>✨ Satisfaction Guarantee</h3>
                                 <ul>
                                     <li>100% satisfaction guaranteed</li>
@@ -284,45 +284,45 @@ const ServicesPage = () => {
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>Customer Reviews</h2>
-                        <div className="reviews-grid">
-                            <div className="review-card">
-                                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+                        <div className="reviews-list-grid">
+                            <div className="review-item-card">
+                                <div className="review-stars-icon">⭐⭐⭐⭐⭐</div>
                                 <p>"Amazing bridal makeup service! The artist understood exactly what I wanted and made me feel like a princess on my wedding day."</p>
-                                <div className="reviewer">- Priya S., Mumbai</div>
+                                <div className="reviewer-name">- Priya S., Mumbai</div>
                             </div>
-                            <div className="review-card">
-                                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+                            <div className="review-item-card">
+                                <div className="review-stars-icon">⭐⭐⭐⭐⭐</div>
                                 <p>"The skin analysis was so detailed and helpful. Finally found products that work perfectly for my sensitive skin."</p>
-                                <div className="reviewer">- Anita K., Delhi</div>
+                                <div className="reviewer-name">- Anita K., Delhi</div>
                             </div>
-                            <div className="review-card">
-                                <div className="review-stars">⭐⭐⭐⭐⭐</div>
+                            <div className="review-item-card">
+                                <div className="review-stars-icon">⭐⭐⭐⭐⭐</div>
                                 <p>"Loved the makeup masterclass! Learned so many professional techniques. The instructor was patient and knowledgeable."</p>
-                                <div className="reviewer">- Sneha R., Bangalore</div>
+                                <div className="reviewer-name">- Sneha R., Bangalore</div>
                             </div>
                         </div>
                     </section>
 
-                    <section className="content-section">
+                    <section className="services-content-section">
                         <h2>Book Your Service Today</h2>
                         <p>
-                            Ready to experience our professional beauty services? Book your appointment today 
+                            Ready to experience our professional beauty services? Book your appointment today
                             and let our experts help you look and feel your best.
                         </p>
-                        <div className="booking-contact">
-                            <div className="contact-method">
+                        <div className="booking-contact-strip">
+                            <div className="contact-method-item">
                                 <h3>📞 Call to Book</h3>
                                 <p>+91-1800-123-4567</p>
                                 <p>Mon-Sat: 9 AM - 9 PM</p>
                             </div>
-                            <div className="contact-method">
+                            <div className="contact-method-item">
                                 <h3>💬 Online Chat</h3>
                                 <p>Available 24/7</p>
                                 <p>Instant booking confirmation</p>
                             </div>
-                            <div className="contact-method">
+                            <div className="contact-method-item">
                                 <h3>🏪 Visit Store</h3>
                                 <p>Walk-ins welcome</p>
                                 <p>Subject to availability</p>

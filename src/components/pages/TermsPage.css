@@ -1,0 +1,147 @@
+/* Terms Page Specific Styles */
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&family=Inter:wght@300;400;500;600&display=swap');
+
+.terms-page-wrapper {
+    background-color: #ffffff;
+    min-height: 100vh;
+    padding: 120px 20px 60px;
+    /* Top padding to clear fixed header */
+    font-family: 'Inter', sans-serif;
+    color: #111;
+    width: 100%;
+}
+
+.terms-container {
+    width: 100%;
+    max-width: 1400px;
+    /* Allow it to go wide but keep readable on huge screens */
+    margin: 0 auto;
+    padding: 0 40px;
+}
+
+/* Header Section */
+.terms-header {
+    text-align: left;
+    margin-bottom: 60px;
+    padding-bottom: 30px;
+    border-bottom: 1px solid #eee;
+}
+
+.terms-title {
+    font-family: 'Outfit', sans-serif;
+    font-size: 3.5rem;
+    font-weight: 500;
+    color: #000;
+    text-transform: uppercase;
+    margin-bottom: 15px;
+    line-height: 1.1;
+    text-align: left;
+}
+
+.terms-subtitle {
+    font-size: 1.1rem;
+    color: #666;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.terms-updated {
+    font-size: 0.9rem;
+    color: #999;
+    font-style: italic;
+    text-align: left;
+}
+
+/* Content Area */
+.terms-content {
+    width: 100%;
+}
+
+.terms-section {
+    margin-bottom: 60px;
+}
+
+.terms-section h2 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 20px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #f0f0f0;
+    text-align: left;
+}
+
+.terms-section h3 {
+    font-family: 'Outfit', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 600;
+    color: #222;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    text-align: left;
+}
+
+.terms-section p {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 20px;
+    text-align: left;
+    max-width: 100%;
+}
+
+.terms-section ul {
+    padding-left: 20px;
+    margin-bottom: 20px;
+}
+
+.terms-section li {
+    font-size: 1.05rem;
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 10px;
+    text-align: left;
+}
+
+.contact-info p {
+    margin-bottom: 5px;
+}
+
+/* Tablet Responsive */
+@media (max-width: 1024px) {
+    .terms-title {
+        font-size: 2.8rem;
+    }
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    .terms-page-wrapper {
+        padding-top: 100px;
+        /* Less top padding on mobile */
+        padding-left: 15px;
+        padding-right: 15px;
+    }
+
+    .terms-container {
+        padding: 0;
+    }
+
+    .terms-header {
+        margin-bottom: 40px;
+    }
+
+    .terms-title {
+        font-size: 2.2rem;
+    }
+
+    .terms-section h2 {
+        font-size: 1.6rem;
+    }
+
+    .terms-section p,
+    .terms-section li {
+        font-size: 1rem;
+    }
+}

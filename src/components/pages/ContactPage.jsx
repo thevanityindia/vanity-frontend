@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FiPhone, FiMail, FiMapPin, FiClock, FiSend } from 'react-icons/fi';
 import { FaFacebookF, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
 import { toast } from 'react-hot-toast';
-import './InfoPages.css';
+import './ContactPage.css';
 
 const ContactPage = () => {
     const [formData, setFormData] = useState({
@@ -48,14 +48,14 @@ const ContactPage = () => {
     };
 
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
+        <div className="contact-page">
+            <div className="contact-container">
+                <div className="contact-header">
                     <h1>Contact Us</h1>
                     <p className="page-subtitle">We're here to help! Get in touch with us</p>
                 </div>
 
-                <div className="info-content">
+                <div className="contact-content">
                     <div className="contact-grid">
                         <div className="contact-info-section">
                             <h2>Get In Touch</h2>
@@ -71,9 +71,9 @@ const ContactPage = () => {
                                     </div>
                                     <div className="contact-details">
                                         <h3>Phone Support</h3>
-                                        <p><strong>+91-1800-123-4567</strong></p>
-                                        <p>Toll-free customer service</p>
-                                        <p>Mon-Sat: 9:00 AM - 9:00 PM</p>
+                                        <p><strong>+91 9112233165</strong></p>
+                                        <p><strong>+91 9112233158</strong></p>
+                                        <p>Mon-Sat: 10:00 AM - 7:00 PM</p>
                                     </div>
                                 </div>
 
@@ -96,8 +96,9 @@ const ContactPage = () => {
                                     <div className="contact-details">
                                         <h3>Head Office</h3>
                                         <p><strong>The Vanity India</strong></p>
-                                        <p>123 Beauty Street, Bandra West</p>
-                                        <p>Mumbai, Maharashtra 400050</p>
+                                        <p>Office no 120, 1st Floor, Hilton Arcade</p>
+                                        <p>Opp-Tanish NX Salon, Evershine</p>
+                                        <p>Vasai East - 401208</p>
                                     </div>
                                 </div>
 
@@ -254,7 +255,7 @@ const ContactPage = () => {
                             </div>
                             <div className="contact-card">
                                 <h3>📱 WhatsApp</h3>
-                                <p>Message us on WhatsApp at +91-98765-43210 for quick support.</p>
+                                <p>Message us on WhatsApp at +91 9112233165 for quick support.</p>
                             </div>
                             <div className="contact-card">
                                 <h3>🏪 Visit Our Stores</h3>
