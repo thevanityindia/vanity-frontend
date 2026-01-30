@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FiChevronDown, FiChevronUp } from 'react-icons/fi';
-import './InfoPages.css';
+import './FAQPage.css'; // Import dedicated CSS
 
 const FAQPage = () => {
     const [openFAQ, setOpenFAQ] = useState(null);
@@ -118,19 +118,19 @@ const FAQPage = () => {
     ];
 
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
-                    <h1>Frequently Asked Questions</h1>
-                    <p className="page-subtitle">Find answers to common questions about shopping with The Vanity India</p>
+        <div className="faq-page-wrapper">
+            <div className="faq-container">
+                <div className="faq-header">
+                    <h1 className="faq-title">Frequently Asked Questions</h1>
+                    <p className="faq-subtitle">Find answers to common questions about shopping with The Vanity India</p>
                 </div>
-                
-                <div className="info-content">
-                    <div className="faq-search">
-                        <input 
-                            type="text" 
-                            placeholder="Search for answers..." 
-                            className="search-input"
+
+                <div className="faq-content">
+                    <div className="faq-search-section">
+                        <input
+                            type="text"
+                            placeholder="Search for answers..."
+                            className="faq-search-input"
                         />
                     </div>
 
@@ -142,7 +142,7 @@ const FAQPage = () => {
                                     const globalIndex = categoryIndex * 100 + faqIndex;
                                     return (
                                         <div key={faqIndex} className="faq-item">
-                                            <button 
+                                            <button
                                                 className={`faq-question ${openFAQ === globalIndex ? 'active' : ''}`}
                                                 onClick={() => toggleFAQ(globalIndex)}
                                             >
@@ -161,7 +161,7 @@ const FAQPage = () => {
                         </section>
                     ))}
 
-                    <section className="content-section">
+                    <section className="faq-help-section">
                         <h2>Still Have Questions?</h2>
                         <p>
                             Can't find what you're looking for? Our customer service team is here to help!

@@ -179,12 +179,13 @@ const UserProfile = () => {
     return (
         <div className="user-profile">
             <div className="profile-sidebar">
-                <div style={{ textAlign: 'center' }}>
-                    <div className="profile-bg" style={{ margin: '0 auto 1rem' }}>
+                <div className="profile-header">
+                    <div className="profile-bg">
                         {user?.firstName?.[0]}{user?.lastName?.[0]}
                     </div>
                     <h3>{user?.firstName} {user?.lastName}</h3>
-                    <p style={{ color: '#666', fontSize: '0.9rem' }}>{user?.email}</p>
+                    <p className="profile-email">{user?.email}</p>
+                    <button onClick={logout} className="logout-btn header-logout">Logout</button>
                 </div>
 
                 <div className="profile-nav">
@@ -201,7 +202,6 @@ const UserProfile = () => {
                         Saved Addresses
                     </button>
                     <button onClick={() => navigate('/orders')}>Order History</button>
-                    <button onClick={logout} style={{ color: '#dc2626' }}>Logout</button>
                 </div>
             </div>
 
@@ -229,7 +229,7 @@ const UserProfile = () => {
                                 </div>
                                 <div className="form-group">
                                     <label>Email</label>
-                                    <input type="email" value={profileData.email} disabled style={{ background: '#f9fafb' }} />
+                                    <input type="email" value={profileData.email} disabled className="input-disabled" />
                                 </div>
                                 <div className="form-group">
                                     <label>Phone Number</label>
@@ -258,11 +258,11 @@ const UserProfile = () => {
                                         <div>{addr.address1}</div>
                                         {addr.address2 && <div>{addr.address2}</div>}
                                         <div>{addr.city}, {addr.state} {addr.postalCode}</div>
-                                        <div style={{ marginTop: '0.5rem', color: '#666', fontSize: '0.9rem' }}>Phone: {addr.phone}</div>
-                                        <div style={{ marginTop: '1rem', display: 'flex', gap: '1rem' }}>
+                                        <div className="address-card-phone">Phone: {addr.phone}</div>
+                                        <div className="address-card-actions">
                                             <button
                                                 onClick={() => handleDeleteAddress(addr._id)}
-                                                style={{ color: '#dc2626', background: 'none', border: 'none', cursor: 'pointer', fontSize: '0.9rem' }}
+                                                className="delete-address-btn"
                                             >
                                                 Delete
                                             </button>
@@ -300,7 +300,7 @@ const UserProfile = () => {
                                             required
                                         />
                                     </div>
-                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                    <div className="form-group full-width">
                                         <label>Address Line 1</label>
                                         <input
                                             value={newAddress.address1}
@@ -309,7 +309,7 @@ const UserProfile = () => {
                                             placeholder="Street address, P.O. box, etc."
                                         />
                                     </div>
-                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
+                                    <div className="form-group full-width">
                                         <label>Address Line 2 (Optional)</label>
                                         <input
                                             value={newAddress.address2}
@@ -332,7 +332,7 @@ const UserProfile = () => {
                                             value={newAddress.state}
                                             onChange={e => setNewAddress({ ...newAddress, state: e.target.value })}
                                             required
-                                            style={{ padding: '0.75rem', border: '1px solid #d1d5db', borderRadius: '6px' }}
+                                            className="form-select"
                                         >
                                             <option value="">Select State</option>
                                             {INDIAN_STATES.map(state => (
@@ -342,7 +342,7 @@ const UserProfile = () => {
                                     </div>
                                     <div className="form-group">
                                         <label>PIN Code</label>
-                                        <div style={{ position: 'relative' }}>
+                                        <div className="pincode-wrapper">
                                             <input
                                                 value={newAddress.postalCode}
                                                 onChange={handlePincodeChange}
@@ -351,7 +351,7 @@ const UserProfile = () => {
                                                 placeholder="Enter 6-digit PIN"
                                             />
                                             {newAddress.postalCode.length === 6 && (
-                                                <span style={{ position: 'absolute', right: '10px', top: '50%', transform: 'translateY(-50%)', color: 'green', fontSize: '0.8rem' }}>
+                                                <span className="pincode-success">
                                                     ✓
                                                 </span>
                                             )}
@@ -370,32 +370,30 @@ const UserProfile = () => {
                                             placeholder="10-digit mobile number"
                                         />
                                     </div>
-                                    <div className="form-group" style={{ gridColumn: 'span 2' }}>
-                                        <label style={{ display: 'flex', alignItems: 'center', gap: '5px' }}>
+                                    <div className="form-group full-width">
+                                        <label className="location-label">
                                             <FaMapMarkerAlt /> Precise Location (Optional)
                                         </label>
-                                        <div style={{ padding: '10px', border: '1px solid #eee', borderRadius: '6px', background: '#f9f9f9', fontSize: '0.9rem', color: '#666' }}>
-                                            To use precise GPS location, please <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer" style={{ color: '#000', textDecoration: 'underline' }}>open Google Maps</a>, find your location, and verify your address details above match.
+                                        <div className="location-help-text">
+                                            To use precise GPS location, please <a href="https://maps.google.com" target="_blank" rel="noopener noreferrer">open Google Maps</a>, find your location, and verify your address details above match.
                                         </div>
                                     </div>
                                 </div>
-                                <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1.5rem' }}>
+                                <div className="checkbox-group">
                                     <input
                                         type="checkbox"
                                         id="isDefault"
                                         checked={newAddress.isDefault}
                                         onChange={e => setNewAddress({ ...newAddress, isDefault: e.target.checked })}
-                                        style={{ marginRight: '0.5rem' }}
                                     />
                                     <label htmlFor="isDefault">Set as default address</label>
                                 </div>
-                                <div style={{ display: 'flex', gap: '1rem' }}>
+                                <div className="form-actions">
                                     <button type="submit" className="btn-primary">Save Address</button>
                                     <button
                                         type="button"
                                         className="btn-secondary"
                                         onClick={() => setShowAddressForm(false)}
-                                        style={{ background: '#e5e7eb', color: '#374151', padding: '0.75rem 1.5rem', border: 'none', borderRadius: '6px', cursor: 'pointer' }}
                                     >
                                         Cancel
                                     </button>

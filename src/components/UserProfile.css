@@ -1,172 +1,536 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600&family=Inter:wght@400;500;600&display=swap');
+
 .user-profile {
     max-width: 1200px;
-    margin: 2rem auto;
-    padding: 0 1rem;
+    margin: 4rem auto;
+    padding: 0 2rem;
     display: grid;
-    grid-template-columns: 250px 1fr;
-    gap: 2rem;
+    grid-template-columns: 300px 1fr;
+    gap: 4rem;
+    font-family: 'Inter', sans-serif;
+    color: #111;
 }
 
+/* Sidebar */
 .profile-sidebar {
-    background: #fff;
-    border-radius: 8px;
-    padding: 1.5rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
     height: fit-content;
 }
 
+.profile-header {
+    text-align: center;
+    margin-bottom: 3rem;
+    padding-bottom: 2rem;
+    border-bottom: 1px solid #eee;
+}
+
 .profile-bg {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
     background: #000;
     color: #fff;
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
+    font-size: 2.5rem;
+    font-weight: 400;
+    margin: 0 auto 1.5rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.profile-header h3 {
+    font-family: 'Outfit', sans-serif;
     font-size: 1.5rem;
-    font-weight: bold;
-    margin-bottom: 1rem;
+    margin-bottom: 0.5rem;
+    color: #000;
+    font-weight: 500;
+}
+
+.profile-email {
+    color: #666;
+    font-size: 0.95rem;
 }
 
 .profile-nav {
     display: flex;
     flex-direction: column;
     gap: 0.5rem;
-    margin-top: 2rem;
 }
 
 .profile-nav button {
     text-align: left;
-    padding: 0.75rem 1rem;
+    padding: 1rem 1.5rem;
     background: transparent;
-    border: none;
-    border-radius: 6px;
+    border: 1px solid transparent;
+    border-radius: 8px;
     cursor: pointer;
-    font-size: 0.95rem;
-    color: #4b5563;
-    transition: all 0.2s;
-}
-
-.profile-nav button:hover,
-.profile-nav button.active {
-    background: #f3f4f6;
-    color: #111827;
+    font-size: 1rem;
+    color: #666;
+    transition: all 0.3s ease;
     font-weight: 500;
+    font-family: 'Outfit', sans-serif;
 }
 
+.profile-nav button:hover {
+    color: #000;
+    background: #f9f9f9;
+}
+
+.profile-nav button.active {
+    background: #000;
+    color: #fff;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: #000;
+}
+
+.logout-btn {
+    color: #ef4444 !important;
+    margin-top: 1.5rem !important;
+    border: 1px solid #fee2e2 !important;
+    border-radius: 4px !important;
+    padding: 0.6rem 2rem !important;
+    background: #fff !important;
+    cursor: pointer;
+    font-size: 0.9rem;
+    display: inline-block;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #fef2f2 !important;
+    border-color: #fca5a5 !important;
+    text-decoration: none !important;
+    transform: translateY(-1px);
+}
+
+/* Main Content */
 .profile-content {
     background: #fff;
-    border-radius: 8px;
-    padding: 2rem;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    min-height: 500px;
 }
 
 .section-title {
-    font-size: 1.5rem;
-    font-weight: 600;
-    margin-bottom: 1.5rem;
-    padding-bottom: 1rem;
-    border-bottom: 1px solid #e5e7eb;
+    font-family: 'Outfit', sans-serif;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-bottom: 2.5rem;
+    padding-bottom: 1.5rem;
+    border-bottom: 1px solid #000;
+    color: #000;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
 }
 
+/* Forms */
 .form-grid {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 1.5rem;
-    margin-bottom: 1.5rem;
+    gap: 2rem;
+    margin-bottom: 3rem;
 }
 
 .form-group {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
+    gap: 0.75rem;
+}
+
+.form-group.full-width {
+    grid-column: 1 / -1;
 }
 
 .form-group label {
-    font-size: 0.875rem;
-    font-weight: 500;
-    color: #374151;
+    font-size: 0.75rem;
+    font-weight: 600;
+    color: #888;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
 }
 
-.form-group input {
-    padding: 0.75rem;
-    border: 1px solid #d1d5db;
-    border-radius: 6px;
-    font-size: 0.95rem;
+.form-group input,
+.form-select {
+    padding: 1rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: all 0.3s;
+    background: #fff;
+    font-family: 'Inter', sans-serif;
+    width: 100%;
+    color: #000;
 }
 
-.form-group input:focus {
+.form-group input:hover,
+.form-select:hover {
+    border-color: #bbb;
+}
+
+.form-group input:focus,
+.form-select:focus {
     outline: none;
     border-color: #000;
-    box-shadow: 0 0 0 1px #000;
+    box-shadow: none;
+}
+
+.input-disabled {
+    background: #fafafa !important;
+    color: #888 !important;
+    border-color: #eee !important;
+    cursor: default;
+}
+
+/* Pincode Wrapper */
+.pincode-wrapper {
+    position: relative;
+    width: 100%;
+}
+
+.pincode-success {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #000;
+    font-weight: bold;
+}
+
+/* Location Help */
+.location-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: #000 !important;
+}
+
+.location-help-text {
+    padding: 1.25rem;
+    background: #f9f9f9;
+    border-left: 3px solid #000;
+    border-radius: 0 4px 4px 0;
+    font-size: 0.9rem;
+    color: #555;
+    line-height: 1.6;
+}
+
+.location-help-text a {
+    color: #000;
+    text-decoration: underline;
+    font-weight: 600;
+}
+
+/* Checkbox */
+.checkbox-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 3rem;
+    padding: 1rem;
+    background: #f9f9f9;
+    border-radius: 4px;
+}
+
+.checkbox-group input[type="checkbox"] {
+    width: 20px;
+    height: 20px;
+    accent-color: #000;
+    cursor: pointer;
+}
+
+.checkbox-group label {
+    font-size: 0.95rem;
+    color: #000;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+/* Buttons */
+.form-actions {
+    display: flex;
+    gap: 1.5rem;
 }
 
 .btn-primary {
     background: #000;
     color: #fff;
-    padding: 0.75rem 1.5rem;
-    border-radius: 6px;
-    border: none;
+    padding: 1rem 2.5rem;
+    border-radius: 4px;
+    border: 1px solid #000;
     cursor: pointer;
-    font-weight: 500;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    transition: all 0.3s;
 }
 
+.btn-primary:hover {
+    background: #333;
+    border-color: #333;
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.btn-secondary {
+    background: #fff;
+    color: #000;
+    padding: 1rem 2.5rem;
+    border: 1px solid #e0e0e0;
+    border-radius: 4px;
+    cursor: pointer;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    font-size: 0.85rem;
+    transition: all 0.3s;
+}
+
+.btn-secondary:hover {
+    border-color: #000;
+    background: #fff;
+}
+
+/* Address Cards */
 .address-card {
-    border: 1px solid #e5e7eb;
+    border: 1px solid #eee;
     border-radius: 8px;
-    padding: 1.5rem;
-    margin-bottom: 1rem;
+    padding: 2rem;
+    margin-bottom: 2rem;
     position: relative;
+    background: #fff;
+    transition: all 0.3s;
+}
+
+.address-card:hover {
+    border-color: #000;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
 }
 
 .address-card.default {
-    border-color: #000;
-    background: #fdfdfd;
+    border: 1px solid #000;
+    background: #fff;
 }
 
 .address-badge {
     position: absolute;
-    top: 1rem;
-    right: 1rem;
+    top: 1.5rem;
+    right: 1.5rem;
     background: #000;
     color: #fff;
-    padding: 0.25rem 0.75rem;
-    border-radius: 9999px;
-    font-size: 0.75rem;
+    padding: 0.35rem 1rem;
+    border-radius: 100px;
+    font-size: 0.7rem;
     font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.address-card-phone {
+    margin-top: 1rem;
+    color: #666;
+    font-size: 0.95rem;
+    font-family: 'Outfit', sans-serif;
+}
+
+.address-card-actions {
+    margin-top: 1.5rem;
+    display: flex;
+    gap: 1.5rem;
+    border-top: 1px solid #f5f5f5;
+    padding-top: 1rem;
+}
+
+.delete-address-btn {
+    color: #666;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 0.85rem;
+    padding: 0;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    transition: color 0.2s;
+}
+
+.delete-address-btn:hover {
+    color: #ef4444;
 }
 
 .add-address-btn {
     width: 100%;
-    padding: 1rem;
-    border: 2px dashed #e5e7eb;
+    padding: 2rem;
+    border: 1px dashed #ccc;
     border-radius: 8px;
-    background: transparent;
+    background: #fafafa;
     cursor: pointer;
-    color: #6b7280;
+    color: #666;
     font-weight: 500;
-    margin-top: 1rem;
-    transition: all 0.2s;
+    margin-top: 2rem;
+    transition: all 0.3s;
+    font-size: 1.1rem;
+    font-family: 'Outfit', sans-serif;
 }
 
 .add-address-btn:hover {
     border-color: #000;
     color: #000;
+    background: #fff;
 }
 
-@media (max-width: 768px) {
+/* Responsive Phone View Rewrite */
+@media (max-width: 900px) {
     .user-profile {
-        grid-template-columns: 1fr;
+        display: flex;
+        flex-direction: column;
+        padding: 1rem;
+        margin: 1rem auto;
+        gap: 2rem;
+        max-width: 100%;
+    }
+
+    /* Sidebar Reset */
+    .profile-sidebar {
+        width: 100%;
+        border-bottom: 1px solid #eee;
+        padding-bottom: 2rem;
+        background: transparent;
+        box-shadow: none;
+        border: none;
+    }
+
+    /* Header Centering */
+    .profile-header {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        margin-bottom: 2rem;
+        width: 100%;
+        border: none;
         padding: 0;
     }
 
+    .profile-bg {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+        margin: 0 auto 1rem auto !important;
+    }
+
+    .profile-header h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.25rem;
+        width: 100%;
+        text-align: center;
+    }
+
+    .profile-email {
+        font-size: 0.95rem;
+        color: #666;
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Horizontal Scroll Nav */
+    .profile-nav {
+        display: flex;
+        flex-direction: row;
+        overflow-x: auto;
+        width: 100%;
+        gap: 0.75rem;
+        padding-bottom: 0.5rem;
+        margin-top: 0;
+        -webkit-overflow-scrolling: touch;
+        scrollbar-width: none;
+        justify-content: flex-start;
+    }
+
+    .profile-nav::-webkit-scrollbar {
+        display: none;
+    }
+
+    .profile-nav button {
+        flex: 0 0 auto;
+        white-space: nowrap;
+        padding: 0.75rem 1.25rem;
+        border-radius: 100px;
+        border: 1px solid #eee;
+        margin: 0;
+        font-size: 0.9rem;
+        text-align: center;
+        background: #fff;
+    }
+
+    .profile-nav button.active {
+        background: #000;
+        color: #fff;
+        border-color: #000;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    }
+
+
+    .logout-btn {
+        margin-top: 1.5rem !important;
+        padding: 0.6rem 2rem !important;
+        border: 1px solid #fee2e2 !important;
+        background: #fff !important;
+        color: #ef4444 !important;
+        border-radius: 100px !important;
+        width: auto !important;
+        font-size: 0.9rem !important;
+    }
+
+    /* Main Content Reset */
+    .profile-content {
+        padding: 0;
+        box-shadow: none;
+        border: none;
+        background: transparent;
+        min-height: auto;
+    }
+
+    .section-title {
+        font-size: 1.5rem;
+        text-align: center;
+        margin-bottom: 2rem;
+        margin-top: 1rem;
+        border-bottom: none;
+        width: 100%;
+    }
+
+    /* Forms Mobile */
     .form-grid {
         grid-template-columns: 1fr;
+        gap: 1.5rem;
+    }
+
+    .form-group input,
+    .form-select {
+        padding: 1rem;
+        font-size: 16px;
+        /* Prevents zoom on iOS */
+    }
+
+    .form-actions {
+        flex-direction: column;
         gap: 1rem;
     }
 
-    .profile-content {
+    .btn-primary,
+    .btn-secondary {
+        width: 100%;
+        padding: 1.1rem;
+        text-align: center;
+    }
+
+    /* Address Cards Mobile */
+    .address-card {
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+    }
+
+    .add-address-btn {
         padding: 1.5rem;
     }
 }

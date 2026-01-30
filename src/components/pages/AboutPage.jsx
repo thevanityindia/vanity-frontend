@@ -1,16 +1,16 @@
 import React from 'react';
-import './InfoPages.css';
+import './AboutPage.css';
 
 const AboutPage = () => {
     return (
-        <div className="info-page">
-            <div className="info-container">
-                <div className="page-header">
+        <div className="about-page">
+            <div className="about-container">
+                <div className="about-header">
                     <h1>About The Vanity India</h1>
                     <p className="page-subtitle">Your Premier Destination for Beauty & Lifestyle</p>
                 </div>
 
-                <div className="info-content">
+                <div className="about-content">
                     <section className="content-section">
                         <h2>Our Story</h2>
                         <p>

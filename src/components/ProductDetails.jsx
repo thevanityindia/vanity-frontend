@@ -235,28 +235,35 @@ const ProductDetails = () => {
                     </div>
 
                     <div className="pd-price-box">
-                        <span className="pd-current-price">{product.price}</span>
-                        {product.originalPrice && <span className="pd-original-price" style={{ marginLeft: '10px' }}>{product.originalPrice}</span>}
+                        {product.originalPrice && (
+                            <span className="pd-original-price">₹{product.originalPrice}</span>
+                        )}
+                        <span className="pd-current-price">₹{product.price}</span>
                     </div>
 
                     <div className="pd-actions">
-                        <div className="quantity-selector" style={{ width: 'fit-content', marginBottom: '10px' }}>
-                            <input
-                                type="number"
-                                min="1"
-                                value={quantity}
-                                onChange={(e) => setQuantity(Math.max(1, parseInt(e.target.value) || 1))}
-                                style={{
-                                    width: '60px',
-                                    height: '40px',
-                                    padding: '5px',
-                                    textAlign: 'center',
-                                    border: '1px solid #000',
-                                    borderRadius: '4px',
-                                    fontSize: '1rem',
-                                    fontWeight: '600'
-                                }}
-                            />
+                        <div className="quantity-selector-container">
+                            <label className="qty-label">Quantity</label>
+                            <div className="quantity-selector">
+                                <button
+                                    className="qty-btn"
+                                    onClick={() => setQuantity(prev => Math.max(1, prev - 1))}
+                                >-</button>
+                                <input
+                                    type="number"
+                                    min="1"
+                                    value={quantity}
+                                    onChange={(e) => {
+                                        const val = parseInt(e.target.value);
+                                        if (!isNaN(val) && val >= 1) setQuantity(val);
+                                    }}
+                                    className="qty-input"
+                                />
+                                <button
+                                    className="qty-btn"
+                                    onClick={() => setQuantity(prev => prev + 1)}
+                                >+</button>
+                            </div>
                         </div>
                         <div className="action-buttons-row">
                             {product.stock <= 0 ? (

@@ -208,6 +208,10 @@ const Header = ({ toggleMenu, isMenuOpen }) => {
                     <Link to={isAuthenticated ? "/profile" : "/login"} className="mobile-icon-link">
                         <FaUser />
                     </Link>
+                    <Link to="/wishlist" className="mobile-icon-link">
+                        <FaHeart />
+                        {wishlistCount > 0 && <span className="mobile-bag-count">{wishlistCount}</span>}
+                    </Link>
                     <Link to="/bag" className="mobile-icon-link">
                         <FaShoppingBag />
                         {cartCount > 0 && <span className="mobile-bag-count">{cartCount}</span>}
