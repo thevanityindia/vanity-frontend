@@ -289,21 +289,41 @@
     }
 
     .checkout-summary-card {
-        order: -1;
+        /* order: -1; Removed to keep it at the bottom */
         position: static;
     }
 }
 
 @media (max-width: 640px) {
-    .form-row {
-        grid-template-columns: 1fr;
-    }
-
     .checkout-page {
-        padding-top: 100px;
+        padding: 100px 1rem 3rem;
     }
 
     .checkout-container h1 {
-        font-size: 2rem;
+        font-size: 1.75rem;
+        margin-bottom: 2rem;
+    }
+
+    .checkout-grid {
+        gap: 1.5rem;
+    }
+
+    .checkout-section-card,
+    .checkout-summary-card {
+        padding: 1.25rem;
+        border-radius: 8px;
+    }
+
+    .form-row {
+        grid-template-columns: 1fr;
+        gap: 1rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.25rem;
+    }
+
+    .payment-option-card {
+        padding: 1rem;
     }
 }

@@ -41,6 +41,7 @@ import AdminLogin from './components/admin/AdminLogin';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
+import ChatAssistant from './components/ChatAssistant';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
@@ -48,6 +49,8 @@ import { AdminAuthProvider } from './context/AdminAuthContext';
 import { ConfirmProvider } from './context/ConfirmContext';
 import { Toaster } from 'react-hot-toast';
 import API_BASE_URL from './config';
+
+import ScrollToTop from './components/ScrollToTop';
 
 function App() {
   const [products, setProducts] = React.useState([]);
@@ -66,6 +69,7 @@ function App() {
         <ShopProvider>
           <AdminAuthProvider>
             <Router>
+              <ScrollToTop />
               <div className="app">
                 <Routes>
                   {/* Admin Routes */}
@@ -159,6 +163,7 @@ function App() {
                     },
                   }}
                 />
+                <ChatAssistant />
               </div>
             </Router>
           </AdminAuthProvider>
