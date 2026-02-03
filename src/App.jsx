@@ -83,8 +83,9 @@ function App() {
                   }}
                 />
                 <Routes>
-                  {/* Admin Routes */}
+                  {/* Admin Routes - Defined FIRST to ensure priority */}
                   <Route path="/admin/login" element={<AdminLogin />} />
+
                   <Route path="/admin" element={
                     <AdminProtectedRoute>
                       <AdminLayout />
@@ -104,49 +105,53 @@ function App() {
                   </Route>
 
                   {/* Main Website Routes */}
-                  <Route element={<MainLayout />}>
-                    <Route path="/" element={<Home products={products} />} />
-                    <Route path="/new" element={<CategoryPage title="New Arrivals" />} />
-                    <Route path="/brands" element={<CategoryPage title="Brands" />} />
-                    <Route path="/makeup" element={<CategoryPage title="Makeup" />} />
-                    <Route path="/skincare" element={<CategoryPage title="Skincare" />} />
-                    <Route path="/hair" element={<CategoryPage title="Hair" />} />
-                    <Route path="/fragrance" element={<CategoryPage title="Fragrance" />} />
-                    <Route path="/bath-body" element={<CategoryPage title="Bath & Body" />} />
-                    <Route path="/artificial-jewellery" element={<CategoryPage title="Artificial Jewellery" />} />
+                  <Route path="/" element={<MainLayout />}>
+                    <Route index element={<Home products={products} />} />
+                    <Route path="new" element={<CategoryPage title="New Arrivals" />} />
+                    <Route path="brands" element={<CategoryPage title="Brands" />} />
+                    <Route path="makeup" element={<CategoryPage title="Makeup" />} />
+                    <Route path="skincare" element={<CategoryPage title="Skincare" />} />
+                    <Route path="hair" element={<CategoryPage title="Hair" />} />
+                    <Route path="fragrance" element={<CategoryPage title="Fragrance" />} />
+                    <Route path="bath-body" element={<CategoryPage title="Bath & Body" />} />
+                    <Route path="artificial-jewellery" element={<CategoryPage title="Artificial Jewellery" />} />
 
                     {/* Footer Routes */}
-                    <Route path="/about" element={<AboutPage />} />
-                    <Route path="/privacy" element={<PrivacyPage />} />
-                    <Route path="/terms" element={<TermsPage />} />
-                    <Route path="/sitemap" element={<SitemapPage />} />
-                    <Route path="/international" element={<InternationalPage />} />
-                    <Route path="/faq" element={<FAQPage />} />
-                    <Route path="/delivery" element={<DeliveryPage />} />
-                    <Route path="/stores" element={<StoresPage />} />
-                    <Route path="/services" element={<ServicesPage />} />
-                    <Route path="/contact" element={<ContactPage />} />
-                    <Route path="/beauty-pass" element={<InfoPage title="Beauty Pass Benefits" />} />
+                    <Route path="about" element={<AboutPage />} />
+                    <Route path="privacy" element={<PrivacyPage />} />
+                    <Route path="terms" element={<TermsPage />} />
+                    <Route path="sitemap" element={<SitemapPage />} />
+                    <Route path="international" element={<InternationalPage />} />
+                    <Route path="faq" element={<FAQPage />} />
+                    <Route path="delivery" element={<DeliveryPage />} />
+                    <Route path="stores" element={<StoresPage />} />
+                    <Route path="services" element={<ServicesPage />} />
+                    <Route path="contact" element={<ContactPage />} />
+                    <Route path="beauty-pass" element={<InfoPage title="Beauty Pass Benefits" />} />
 
                     {/* Auth Route */}
-                    <Route path="/login" element={<LoginRegister />} />
+                    <Route path="login" element={<LoginRegister />} />
 
                     {/* Header Routes */}
-                    <Route path="/stores-events" element={<StoresEvents />} />
-                    <Route path="/wishlist" element={<Wishlist />} />
-                    <Route path="/bag" element={<Bag />} />
-                    <Route path="/product/:id" element={<ProductDetails />} />
-                    <Route path="/checkout" element={<Checkout />} />
-                    <Route path="/orders" element={<OrderHistory />} />
-                    <Route path="/profile" element={<UserProfile />} />
-                    <Route path="/blogs" element={<BlogList />} />
-                    <Route path="/blogs/:slug" element={<BlogDetail />} />
+                    <Route path="stores-events" element={<StoresEvents />} />
+                    <Route path="wishlist" element={<Wishlist />} />
+                    <Route path="bag" element={<Bag />} />
+                    <Route path="product/:id" element={<ProductDetails />} />
+                    <Route path="checkout" element={<Checkout />} />
+                    <Route path="orders" element={<OrderHistory />} />
+                    <Route path="profile" element={<UserProfile />} />
+                    <Route path="blogs" element={<BlogList />} />
+                    <Route path="blogs/:slug" element={<BlogDetail />} />
 
                     {/* Dynamic Category Routes - Place these LAST */}
-                    <Route path="/:category/:subcategory/:productType" element={<CategoryPage />} />
-                    <Route path="/:category/:subcategory" element={<CategoryPage />} />
-                    <Route path="/:category" element={<CategoryPage />} />
+                    {/* Using explicit paths to prevent ambiguity if possible, but fallback to params */}
+                    <Route path=":category/:subcategory/:productType" element={<CategoryPage />} />
+                    <Route path=":category/:subcategory" element={<CategoryPage />} />
+                    <Route path=":category" element={<CategoryPage />} />
                   </Route>
+
+                  {/* Catch All 404 */}
+                  <Route path="*" element={<NotFound />} />
                 </Routes>
               </div>
             </Router>
