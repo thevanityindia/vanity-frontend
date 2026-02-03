@@ -1,8 +1,5 @@
 import React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import Header from './components/Header';
-import Navbar from './components/Navbar';
-import Footer from './components/Footer';
 import CategoryPage from './components/CategoryPage';
 // Import new page components
 import AboutPage from './components/pages/AboutPage';
@@ -41,7 +38,6 @@ import AdminLogin from './components/admin/AdminLogin';
 import AdminLayout from './components/admin/AdminLayout';
 import AdminDashboard from './components/admin/AdminDashboard';
 import AdminProtectedRoute from './components/admin/AdminProtectedRoute';
-import ChatAssistant from './components/ChatAssistant';
 import './App.css';
 import { AuthProvider } from './context/AuthContext';
 import { ShopProvider } from './context/ShopContext';
@@ -51,10 +47,10 @@ import { Toaster } from 'react-hot-toast';
 import API_BASE_URL from './config';
 
 import ScrollToTop from './components/ScrollToTop';
+import MainLayout from './components/MainLayout';
 
 function App() {
   const [products, setProducts] = React.useState([]);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
   React.useEffect(() => {
     fetch(`${API_BASE_URL}/api/products`)
@@ -71,6 +67,21 @@ function App() {
             <Router>
               <ScrollToTop />
               <div className="app">
+                <Toaster
+                  position="top-center"
+                  toastOptions={{
+                    style: {
+                      background: '#333',
+                      color: '#fff',
+                    },
+                    success: {
+                      iconTheme: {
+                        primary: '#fff',
+                        secondary: '#333',
+                      },
+                    },
+                  }}
+                />
                 <Routes>
                   {/* Admin Routes */}
                   <Route path="/admin/login" element={<AdminLogin />} />
@@ -93,77 +104,50 @@ function App() {
                   </Route>
 
                   {/* Main Website Routes */}
-                  <Route path="/*" element={
-                    <>
-                      <div className="sticky-header-container">
-                        <Header toggleMenu={() => setIsMobileMenuOpen(!isMobileMenuOpen)} isMenuOpen={isMobileMenuOpen} />
-                        <Navbar isOpen={isMobileMenuOpen} closeMenu={() => setIsMobileMenuOpen(false)} />
-                      </div>
+                  <Route element={<MainLayout />}>
+                    <Route path="/" element={<Home products={products} />} />
+                    <Route path="/new" element={<CategoryPage title="New Arrivals" />} />
+                    <Route path="/brands" element={<CategoryPage title="Brands" />} />
+                    <Route path="/makeup" element={<CategoryPage title="Makeup" />} />
+                    <Route path="/skincare" element={<CategoryPage title="Skincare" />} />
+                    <Route path="/hair" element={<CategoryPage title="Hair" />} />
+                    <Route path="/fragrance" element={<CategoryPage title="Fragrance" />} />
+                    <Route path="/bath-body" element={<CategoryPage title="Bath & Body" />} />
+                    <Route path="/artificial-jewellery" element={<CategoryPage title="Artificial Jewellery" />} />
 
-                      <Routes>
-                        <Route path="/:category/:subcategory/:productType" element={<CategoryPage />} />
-                        <Route path="/:category/:subcategory" element={<CategoryPage />} />
-                        <Route path="/:category" element={<CategoryPage />} />
+                    {/* Footer Routes */}
+                    <Route path="/about" element={<AboutPage />} />
+                    <Route path="/privacy" element={<PrivacyPage />} />
+                    <Route path="/terms" element={<TermsPage />} />
+                    <Route path="/sitemap" element={<SitemapPage />} />
+                    <Route path="/international" element={<InternationalPage />} />
+                    <Route path="/faq" element={<FAQPage />} />
+                    <Route path="/delivery" element={<DeliveryPage />} />
+                    <Route path="/stores" element={<StoresPage />} />
+                    <Route path="/services" element={<ServicesPage />} />
+                    <Route path="/contact" element={<ContactPage />} />
+                    <Route path="/beauty-pass" element={<InfoPage title="Beauty Pass Benefits" />} />
 
-                        <Route path="/" element={<Home products={products} />} />
-                        <Route path="/new" element={<CategoryPage title="New Arrivals" />} />
-                        <Route path="/brands" element={<CategoryPage title="Brands" />} />
-                        <Route path="/makeup" element={<CategoryPage title="Makeup" />} />
-                        <Route path="/skincare" element={<CategoryPage title="Skincare" />} />
-                        <Route path="/hair" element={<CategoryPage title="Hair" />} />
-                        <Route path="/fragrance" element={<CategoryPage title="Fragrance" />} />
-                        <Route path="/bath-body" element={<CategoryPage title="Bath & Body" />} />
-                        <Route path="/artificial-jewellery" element={<CategoryPage title="Artificial Jewellery" />} />
+                    {/* Auth Route */}
+                    <Route path="/login" element={<LoginRegister />} />
 
-                        {/* Footer Routes */}
-                        <Route path="/about" element={<AboutPage />} />
-                        <Route path="/privacy" element={<PrivacyPage />} />
-                        <Route path="/terms" element={<TermsPage />} />
-                        <Route path="/sitemap" element={<SitemapPage />} />
-                        <Route path="/international" element={<InternationalPage />} />
-                        <Route path="/faq" element={<FAQPage />} />
-                        <Route path="/delivery" element={<DeliveryPage />} />
-                        <Route path="/stores" element={<StoresPage />} />
-                        <Route path="/services" element={<ServicesPage />} />
-                        <Route path="/contact" element={<ContactPage />} />
-                        <Route path="/beauty-pass" element={<InfoPage title="Beauty Pass Benefits" />} />
+                    {/* Header Routes */}
+                    <Route path="/stores-events" element={<StoresEvents />} />
+                    <Route path="/wishlist" element={<Wishlist />} />
+                    <Route path="/bag" element={<Bag />} />
+                    <Route path="/product/:id" element={<ProductDetails />} />
+                    <Route path="/checkout" element={<Checkout />} />
+                    <Route path="/orders" element={<OrderHistory />} />
+                    <Route path="/profile" element={<UserProfile />} />
+                    <Route path="/blogs" element={<BlogList />} />
+                    <Route path="/blogs/:slug" element={<BlogDetail />} />
 
-                        {/* Auth Route */}
-                        <Route path="/login" element={<LoginRegister />} />
-
-                        {/* Header Routes */}
-                        <Route path="/stores-events" element={<StoresEvents />} />
-                        <Route path="/wishlist" element={<Wishlist />} />
-                        <Route path="/bag" element={<Bag />} />
-                        <Route path="/product/:id" element={<ProductDetails />} />
-                        <Route path="/checkout" element={<Checkout />} />
-                        <Route path="/orders" element={<OrderHistory />} />
-                        <Route path="/profile" element={<UserProfile />} />
-                        <Route path="/blogs" element={<BlogList />} />
-                        <Route path="/blogs/:slug" element={<BlogDetail />} />
-                      </Routes>
-
-                      <Footer />
-                    </>
-                  } />
+                    {/* Dynamic Category Routes - Place these LAST */}
+                    <Route path="/:category/:subcategory/:productType" element={<CategoryPage />} />
+                    <Route path="/:category/:subcategory" element={<CategoryPage />} />
+                    <Route path="/:category" element={<CategoryPage />} />
+                  </Route>
                 </Routes>
-
-                <Toaster
-                  position="top-center"
-                  toastOptions={{
-                    style: {
-                      background: '#333',
-                      color: '#fff',
-                    },
-                    success: {
-                      iconTheme: {
-                        primary: '#fff',
-                        secondary: '#333',
-                      },
-                    },
-                  }}
-                />
-                <ChatAssistant />
               </div>
             </Router>
           </AdminAuthProvider>
