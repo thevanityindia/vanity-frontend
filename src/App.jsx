@@ -48,6 +48,7 @@ import API_BASE_URL from './config';
 
 import ScrollToTop from './components/ScrollToTop';
 import MainLayout from './components/MainLayout';
+import NotFound from './components/NotFound';
 
 function App() {
   const [products, setProducts] = React.useState([]);
