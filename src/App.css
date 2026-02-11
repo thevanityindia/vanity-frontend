@@ -4,8 +4,8 @@
   min-height: 100vh;
   display: flex;
   flex-direction: column;
-  padding-top: 80px;
-  /* Space for the Fixed Header */
+  padding-top: 150px;
+  /* Space for the Fixed Header (Header + Navbar) */
 }
 
 @media (max-width: 1024px) {

@@ -99,8 +99,8 @@
 .header-actions {
     display: flex;
     align-items: center;
-    gap: 6.5rem;
-    /* Drastically increased spacing to fill empty space */
+    gap: 2rem;
+    /* Adjusted spacing for better visual balance */
     flex-shrink: 0;
 }
 
